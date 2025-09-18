@@ -25,7 +25,7 @@ import { useTheme } from 'next-themes';
 
 const Navbar = () => {
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -133,11 +133,11 @@ const Navbar = () => {
                   className="flex items-center space-x-2 text-accent-800 dark:text-gray-300 hover:text-primary-600"
                 >
                   <User className="w-4 h-4" />
-                  <span className="hidden sm:inline">{user.name || 'Profile'}</span>
+                  <span className="hidden sm:inline">{user.displayName || 'Profile'}</span>
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={logout}
+                  onClick={signOut}
                   className="text-accent-800 border-accent-300 hover:bg-accent-50 dark:text-gray-300 dark:border-accent-600 dark:hover:bg-accent-800"
                 >
                   Logout
