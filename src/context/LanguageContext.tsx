@@ -55,8 +55,6 @@ const translations: Record<Language, Record<string, string>> = {
     'home.hero.cta.secondary': 'Explore Features',
     
     // Features Section
-    'home.features.heading': 'Everything You Need to Succeed',
-    'home.features.subtitle': 'Comprehensive tools and resources for your tech career journey',
     'home.features.ai.title': 'AI-Powered Learning',
     'home.features.ai.description': 'Personalized learning paths powered by AI to help you master any tech skill.',
     'home.features.ai.tools.neuron': 'Neuron DSA Solver',
@@ -136,9 +134,6 @@ const translations: Record<Language, Record<string, string>> = {
     'home.companies.heading': 'Supported',
     'home.companies.heading.highlight': 'Companies',
     'home.companies.subtitle': 'Get specialized preparation for top tech companies',
-    'home.interactive.heading': 'Interactive',
-    'home.interactive.heading.rest': 'Learning Experience',
-    'home.interactive.subtitle': 'Engage with our platform through interactive elements designed to enhance your learning journey',
     'home.community': 'Community Insights',
     'home.community.desc': 'Connect with peers and industry professionals to gain valuable insights and expand your professional network.',
     'home.cta.final.title': 'Transform Your Career',
