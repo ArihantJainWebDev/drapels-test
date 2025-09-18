@@ -1,51 +1,139 @@
-// components/sections/FAQSection.tsx
-import { Card, CardContent } from '@/components/ui/card';
+'use client';
 
-const FAQSection = () => {
-  const faqs = [
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp, HelpCircle, Mail } from 'lucide-react';
+
+interface FAQSectionProps {
+  t: (key: string) => string;
+}
+
+type FAQItem = {
+  question: string;
+  answer: string;
+};
+
+const FAQSection = ({ t }: FAQSectionProps) => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const faqs: FAQItem[] = [
     {
-      q: "How quickly can I expect to see results?",
-      a: "Most users see improvement in their interview performance within 2-4 weeks of consistent practice."
+      question: t('home.faq.howToStart'),
+      answer: t('home.faq.howToStartAnswer')
     },
     {
-      q: "Is this suitable for beginners?",
-      a: "Absolutely! Our adaptive learning system adjusts to your current skill level and experience."
+      question: t('home.faq.freeTrial'),
+      answer: t('home.faq.freeTrialAnswer')
     },
     {
-      q: "What companies do you have insights for?",
-      a: "We cover 500+ companies including FAANG, startups, and Indian tech giants like Flipkart, Zomato, and more."
+      question: t('home.faq.languages'),
+      answer: t('home.faq.languagesAnswer')
+    },
+    {
+      question: t('home.faq.aiLearning'),
+      answer: t('home.faq.aiLearningAnswer')
+    },
+    {
+      question: t('home.faq.interviewPrep'),
+      answer: t('home.faq.interviewPrepAnswer')
     }
   ];
 
-  return (
-    <section className="py-16 sm:py-20 md:py-32 px-4 relative bg-gray-50/50 dark:bg-gray-950/50">
-      <div className="container mx-auto relative z-10">
-        <div className="text-center mb-8 sm:mb-12 md:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 sm:mb-6 text-gray-900 dark:text-white px-4 sm:px-0">
-            Frequently Asked{' '}
-            <span className="font-extralight text-gray-600 dark:text-gray-400">
-              Questions
-            </span>
-          </h2>
-          <div className="mx-auto h-px w-16 sm:w-24 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded-full" />
-        </div>
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
-        <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
+  return (
+    <section className="py-20 bg-muted/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-3xl font-bold text-foreground mb-4">
+            {t('home.faq.title')}
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            {t('home.faq.subtitle')}
+          </p>
+        </motion.div>
+
+        <div className="max-w-3xl mx-auto">
           {faqs.map((faq, index) => (
-            <div key={index} className="group">
-              <Card className="hover:shadow-2xl hover:ring-1 hover:ring-[#1EB36B]/30 transition-all duration-300 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-0 rounded-2xl sm:rounded-3xl">
-                <CardContent className="p-6 sm:p-8">
-                  <h3 className="font-medium text-base sm:text-lg md:text-xl mb-3 sm:mb-4 text-gray-900 dark:text-white">
-                    {faq.q}
+            <motion.div 
+              key={index}
+              className="mb-4 overflow-hidden rounded-xl border border-border/50 transition-all duration-300 bg-card"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+            >
+              <button
+                className={`flex w-full items-center justify-between p-6 text-left transition-all ${
+                  openIndex === index 
+                    ? 'bg-primary/5' 
+                    : 'hover:bg-muted/50'
+                }`}
+                onClick={() => toggleFAQ(index)}
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-${index}`}
+              >
+                <div className="flex items-start">
+                  <div className={`p-1.5 rounded-lg mr-4 mt-0.5 ${openIndex === index ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'}`}>
+                    <HelpCircle className="w-5 h-5" />
+                  </div>
+                  <h3 className={`text-lg font-medium text-left ${
+                    openIndex === index ? 'text-foreground' : 'text-foreground/90'
+                  }`}>
+                    {faq.question}
                   </h3>
-                  <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-light">
-                    {faq.a}
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+                </div>
+                <div className={`p-1 rounded-full ${openIndex === index ? 'bg-primary/10 text-primary' : 'text-muted-foreground'}`}>
+                  {openIndex === index ? (
+                    <ChevronUp className="w-5 h-5" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5" />
+                  )}
+                </div>
+              </button>
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 pb-6 pt-0 text-muted-foreground pl-16">
+                      {faq.answer}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
         </div>
+
+        <motion.div 
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <p className="text-muted-foreground mb-6 text-lg">
+            {t('home.faq.contactPrompt')}
+          </p>
+          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Mail className="w-4 h-4 mr-2" />
+            {t('home.faq.contactButton')}
+          </Button>
+        </motion.div>
       </div>
     </section>
   );

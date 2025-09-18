@@ -1,7 +1,7 @@
-// components/sections/FeaturesSection.tsx
-import { Card, CardContent } from '@/components/ui/card';
-import { Route, Lightbulb, MessageSquareText, Mails } from 'lucide-react';
-import FeatureCard from '@/components/ui/FeatureCard';
+'use client';
+
+import { motion } from 'framer-motion';
+import { Code, Brain, Lightbulb, MessageSquare, Mail as MailIcon, BookOpen, Users, Briefcase, FileText } from 'lucide-react';
 
 interface FeaturesSectionProps {
   t: (key: string) => string;
@@ -10,55 +10,98 @@ interface FeaturesSectionProps {
 const FeaturesSection = ({ t }: FeaturesSectionProps) => {
   const features = [
     {
-      icon: Route,
-      title: t('home.features.roadmaps'),
-      description: t('home.features.roadmaps.desc'),
-      color: 'from-indigo-500 to-blue-600'
+      icon: <Brain className="w-6 h-6 text-primary" />,
+      title: t('home.features.ai.title'),
+      description: t('home.features.ai.description'),
+      tools: [
+        { name: t('home.features.ai.tools.neuron'), icon: <Brain className="w-4 h-4" /> },
+        { name: t('home.features.ai.tools.mock'), icon: <Users className="w-4 h-4" /> },
+        { name: t('home.features.ai.tools.quiz'), icon: <BookOpen className="w-4 h-4" /> },
+        { name: t('home.features.ai.tools.roadmap'), icon: <Code className="w-4 h-4" /> },
+      ]
     },
     {
-      icon: Lightbulb,
-      title: t('home.features.resources'),
-      description: t('home.features.resources.desc'),
-      color: 'from-yellow-500 to-orange-500'
+      icon: <Code className="w-6 h-6 text-secondary" />,
+      title: t('home.features.practice.title'),
+      description: t('home.features.practice.description'),
+      tools: [
+        { name: t('home.features.practice.tools.compiler'), icon: <Code className="w-4 h-4" /> },
+        { name: t('home.features.practice.tools.problem'), icon: <BookOpen className="w-4 h-4" /> },
+        { name: t('home.features.practice.tools.documentation'), icon: <BookOpen className="w-4 h-4" /> },
+      ]
     },
     {
-      icon: MessageSquareText,
-      title: t('home.features.insights'),
-      description: t('home.features.insights.desc'),
-      color: 'from-green-500 to-emerald-600'
-    },
-    {
-      icon: Mails,
-      title: t('home.features.email'),
-      description: t('home.features.email.desc'),
-      color: 'from-purple-500 to-pink-500'
+      icon: <Briefcase className="w-6 h-6 text-accent" />,
+      title: t('home.features.career.title'),
+      description: t('home.features.career.description'),
+      tools: [
+        { name: t('home.features.career.tools.company'), icon: <Briefcase className="w-4 h-4" /> },
+        { name: t('home.features.career.tools.resume'), icon: <FileText className="w-4 h-4" /> },
+        { name: t('home.features.career.tools.email'), icon: <MailIcon className="w-4 h-4" /> },
+        { name: t('home.features.career.tools.community'), icon: <Users className="w-4 h-4" /> },
+      ]
     }
   ];
 
   return (
-    <section className="py-12 sm:py-16 md:py-28 px-4 relative bg-[#FFF2E0] dark:bg-gray-950/50">
-      {/* Static background elements */}
-      <div className="absolute w-56 sm:w-72 md:w-80 h-56 sm:h-72 md:h-80 rounded-full bg-gradient-to-br from-gray-200/15 to-gray-300/10 dark:from-gray-700/15 dark:to-gray-600/10 blur-3xl top-[10%] left-[5%]" />
-      <div className="absolute w-48 sm:w-56 md:w-64 h-48 sm:h-56 md:h-64 rounded-full bg-gradient-to-br from-gray-100/20 to-gray-200/15 dark:from-gray-800/20 dark:to-gray-700/15 blur-2xl bottom-[15%] right-[8%]" />
-      
-      <div className="container mx-auto relative z-10">
-        <div className="text-center mb-8 sm:mb-12 md:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 sm:mb-6 leading-tight text-gray-900 dark:text-white px-4 sm:px-0">
-            {t('home.features.heading')} <span className="font-extralight text-gray-600 dark:text-gray-400">{t('home.features.heading.highlight')}</span>
-          </h2>
-          <div className="mx-auto h-px w-16 sm:w-24 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded-full" />
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed font-light mt-4 px-4 sm:px-0">
+    <section className="py-16 bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <motion.h2 
+            className="text-3xl font-bold text-foreground"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            {t('home.features.heading')}
+          </motion.h2>
+          <motion.p 
+            className="mt-4 text-xl text-muted-foreground"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             {t('home.features.subtitle')}
-          </p>
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+        <div className="grid gap-6 md:grid-cols-3">
           {features.map((feature, index) => (
-            <FeatureCard 
-              key={index} 
-              feature={feature} 
-              index={index} 
-            />
+            <motion.div
+              key={index}
+              className="bg-card rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-border/50 hover:-translate-y-1"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+            >
+              <div className={`flex items-center justify-center w-12 h-12 rounded-lg ${
+                index === 0 ? 'bg-primary/10 text-primary' : 
+                index === 1 ? 'bg-secondary/10 text-secondary' : 
+                'bg-accent/10 text-accent'
+              } mb-4`}>
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">
+                {feature.title}
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                {feature.description}
+              </p>
+              <div className="mt-4 space-y-2">
+                {feature.tools.map((tool, toolIndex) => (
+                  <div key={toolIndex} className="flex items-center text-sm text-muted-foreground">
+                    <span className={`mr-2 ${
+                      index === 0 ? 'text-primary' : 
+                      index === 1 ? 'text-secondary' : 'text-accent'
+                    }`}>•</span>
+                    <span>{tool.name}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>

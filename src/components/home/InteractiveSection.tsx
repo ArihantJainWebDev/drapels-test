@@ -1,62 +1,186 @@
-// components/sections/InteractiveSection.tsx
-import { Card, CardContent } from '@/components/ui/card';
-import { Zap, Users } from 'lucide-react';
+'use client';
+
+import { motion } from 'framer-motion';
+import { Code, MessageSquare, BarChart2, GitBranch, Zap, Users, CheckCircle, Clock, Building2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface InteractiveSectionProps {
   t: (key: string) => string;
 }
 
 const InteractiveSection = ({ t }: InteractiveSectionProps) => {
-  const interactiveFeatures = [
+  const stats = [
+    { 
+      value: '10,000+', 
+      label: t('home.stats.users'), 
+      icon: <Users className="w-5 h-5" />,
+      color: 'text-primary'
+    },
+    { 
+      value: '50+', 
+      label: t('home.stats.companies'), 
+      icon: <Building2 className="w-5 h-5" />,
+      color: 'text-secondary'
+    },
+    { 
+      value: '1M+', 
+      label: t('home.stats.questions'), 
+      icon: <Code className="w-5 h-5" />,
+      color: 'text-accent'
+    },
+    { 
+      value: '95%', 
+      label: t('home.stats.successRate'), 
+      icon: <CheckCircle className="w-5 h-5" />,
+      color: 'text-success'
+    },
+  ];
+
+  const features = [
     {
-      icon: Zap,
-      title: t('home.interactive.realtime.title'),
-      description: t('home.interactive.realtime.desc')
+      icon: <Code className="w-5 h-5" />,
+      title: t('home.interactive.features.codeEditor'),
+      description: t('home.interactive.features.codeEditorDesc'),
+      bgColor: 'bg-primary/10',
+      textColor: 'text-primary'
     },
     {
-      icon: Users,
-      title: t('home.community'),
-      description: t('home.community.desc')
+      icon: <MessageSquare className="w-5 h-5" />,
+      title: t('home.interactive.features.collaboration'),
+      description: t('home.interactive.features.collaborationDesc'),
+      bgColor: 'bg-secondary/10',
+      textColor: 'text-secondary'
+    },
+    {
+      icon: <BarChart2 className="w-5 h-5" />,
+      title: t('home.interactive.features.analytics'),
+      description: t('home.interactive.features.analyticsDesc'),
+      bgColor: 'bg-accent/10',
+      textColor: 'text-accent'
+    },
+    {
+      icon: <Clock className="w-5 h-5" />,
+      title: t('home.interactive.features.timeTracking'),
+      description: t('home.interactive.features.timeTrackingDesc'),
+      bgColor: 'bg-warning/10',
+      textColor: 'text-warning'
     }
   ];
 
   return (
-    <section className="py-12 sm:py-16 md:py-32 px-4 relative bg-gray-50/50 dark:bg-gray-950/50">
-      {/* Static elements */}
-      <div className="absolute w-64 sm:w-72 md:w-88 h-64 sm:h-72 md:h-88 rounded-full bg-gradient-to-br from-gray-200/18 to-gray-300/12 dark:from-gray-700/18 dark:to-gray-600/12 blur-3xl top-[15%] left-[10%] sm:left-[15%]" />
-      
-      <div className="container mx-auto relative z-10">
-        <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 sm:mb-6 leading-tight text-gray-900 dark:text-white px-4 sm:px-0">
-            <span className="font-extralight text-gray-600 dark:text-gray-400">{t('home.interactive.heading')}</span> {t('home.interactive.heading.rest')}
-          </h2>
-          <div className="mx-auto h-px w-16 sm:w-24 bg-gradient-to-r from-gray-300 via-gray-400 to-gray-300 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded-full" />
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed font-light mt-4 px-4 sm:px-0">
-            {t('home.interactive.subtitle')}
-          </p>
-        </div>
+    <section className="py-16 bg-muted/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="space-y-8">
+            <motion.div 
+              className="space-y-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <h2 className="text-3xl font-bold text-foreground">
+                {t('home.interactive.heading')}
+              </h2>
+              <p className="text-xl text-muted-foreground">
+                {t('home.interactive.subtitle')}
+              </p>
+            </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
-          {interactiveFeatures.map((feature, index) => (
-            <div key={index} className="group">
-              <Card className="h-full border-0 shadow-lg hover:shadow-2xl hover:ring-1 hover:ring-[#1EB36B]/30 transition-all duration-300 bg-white/70 dark:bg-black/70 backdrop-blur-xl rounded-2xl sm:rounded-3xl overflow-hidden">
-                <CardContent className="p-6 sm:p-8">
-                  <div className="flex items-start mb-4 sm:mb-6">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-br from-[#93C5FD] to-[#1EB36B] text-white rounded-xl sm:rounded-2xl flex items-center justify-center mr-3 sm:mr-4 md:mr-6 shadow-lg flex-shrink-0">
-                      <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8" />
+            <div className="grid grid-cols-2 gap-4">
+              {stats.map((stat, index) => (
+                <motion.div 
+                  key={index} 
+                  className="bg-card p-4 rounded-lg shadow-sm border border-border/50 transition-all hover:-translate-y-1"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
+                  <div className="flex items-center space-x-2">
+                    <div className={`p-1 rounded-md ${stat.color}/10`}>
+                      <span className={stat.color}>
+                        {stat.icon}
+                      </span>
                     </div>
-                    <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl leading-snug font-medium text-gray-900 dark:text-white">
-                      {feature.title}
-                    </h3>
+                    <p className="text-2xl font-bold text-foreground">{stat.value}</p>
                   </div>
-                  <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-light">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
+                  <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+                </motion.div>
+              ))}
             </div>
-          ))}
-        </div>
+
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 pt-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                {t('home.interactive.cta.primary')}
+                <Zap className="w-4 h-4 ml-2" />
+              </Button>
+              <Button variant="outline" className="text-foreground">
+                {t('home.interactive.cta.secondary')}
+                <GitBranch className="w-4 h-4 ml-2" />
+              </Button>
+            </motion.div>
+          </div>
+
+          <div className="relative">
+            <motion.div 
+              className="relative z-10 bg-card rounded-xl shadow-lg overflow-hidden border border-border/50"
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="h-10 flex items-center px-4 bg-muted/50 border-b border-border/50">
+                <div className="flex space-x-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-destructive"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-warning"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-success"></div>
+                </div>
+                <div className="ml-4 text-sm text-muted-foreground font-mono">
+                  interactive-demo.jsx
+                </div>
+              </div>
+              <div className="p-6 space-y-4">
+                {features.map((feature, index) => (
+                  <motion.div 
+                    key={index}
+                    className={`flex items-start space-x-4 p-3 rounded-lg transition-all hover:bg-muted/50`}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: 0.1 * index }}
+                  >
+                    <div className="flex-shrink-0 mt-0.5">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${feature.bgColor} ${feature.textColor}`}>
+                        {feature.icon}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-foreground">{feature.title}</h3>
+                      <p className="text-sm text-muted-foreground mt-1">{feature.description}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+            
+            {/* Decorative elements */}
+            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gradient-to-br from-primary to-accent rounded-2xl opacity-10 blur-3xl"></div>
+            <div className="absolute -top-4 -left-4 w-32 h-32 bg-gradient-to-br from-warning to-secondary rounded-2xl opacity-10 blur-3xl"></div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
