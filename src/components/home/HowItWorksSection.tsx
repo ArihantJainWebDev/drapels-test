@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variant } from 'framer-motion';
 import { 
   Search, 
   Users, 
@@ -83,7 +83,7 @@ const HowItWorksSection = ({ user, t }: HowItWorksSectionProps) => {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
         damping: 12,
         duration: 0.8
