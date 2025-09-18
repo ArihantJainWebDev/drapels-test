@@ -1,0 +1,29 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://drapels.com/sitemap.xml
+Sitemap: https://drapels.com/blogs/sitemap.xml
+Sitemap: https://drapels.com/blogs/news-sitemap.xml
+
+# RSS Feed
+Sitemap: https://drapels.com/blogs/rss.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow admin and private areas
+Disallow: /admin
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow important pages
+Allow: /blogs
+Allow: /blogs/*
+Allow: /roadmap
+Allow: /companies
+Allow: /community
+
+
