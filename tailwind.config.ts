@@ -7,6 +7,8 @@ export default {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   prefix: "",
   theme: {
@@ -18,6 +20,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        'poppins': ['Poppins', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
+        'nunito': ['Nunito', 'sans-serif'],
+      },
       colors: {
         // Base colors
         border: "hsl(var(--border) / <alpha-value>)",
@@ -28,20 +35,20 @@ export default {
         
         // Primary brand color (Soft Blue #2563eb)
         primary: {
-          DEFAULT: "#2563eb",              // Soft blue
+          DEFAULT: "#64748b",              // Slate 500
           foreground: "#ffffff",           // White text
-          dark: "#1d4ed8",                // Deeper blue for hover
-          light: "#dbeafe",               // Light blue tint
-          50: "#eff6ff",                  // Almost white blue
-          100: "#dbeafe",                 // Very light blue
-          200: "#bfdbfe",                 // Light blue
-          300: "#93c5fd",                 // Medium light blue
-          400: "#60a5fa",                 // Medium blue
-          500: "#2563eb",                 // Default blue
-          600: "#1d4ed8",                 // Rich blue
-          700: "#1e40af",                 // Deep blue
-          800: "#1e3a8a",                 // Very dark blue
-          900: "#1e293b",                 // Charcoal (almost black blue)
+          dark: "#475569",                // Slate 600
+          light: "#f1f5f9",               // Slate 100
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
         },
         
         // Secondary color (Dark Mustard #b45309)
@@ -62,22 +69,22 @@ export default {
           900: "#78350f",                // Almost black mustard
         },
         
-        // Accent color (Charcoal #1e293b)
+        // Accent color (Blue)
         accent: {
-          DEFAULT: "#1e293b",             // Charcoal
+          DEFAULT: "#0ea5e9",             // Sky 500
           foreground: "#ffffff",          // White text
-          dark: "#0f172a",               // Deeper charcoal
-          light: "#f1f5f9",              // Light gray
-          50: "#f8fafc",                 // Almost white
-          100: "#f1f5f9",                // Very light gray
-          200: "#e2e8f0",                // Light gray
-          300: "#cbd5e1",                // Medium light gray
-          400: "#94a3b8",                // Medium gray
-          500: "#64748b",                // Rich gray
-          600: "#475569",                // Deep gray
-          700: "#334155",                // Darker gray
-          800: "#1e293b",                // Default charcoal
-          900: "#0f172a",                // Almost black
+          dark: "#0284c7",               // Sky 600
+          light: "#e0f2fe",              // Sky 100
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
         },
         
         // Neutral colors (Warm grays with beige undertones)
@@ -108,26 +115,51 @@ export default {
           900: "hsl(25, 30%, 12%)",       // Rich black brown
         },
         
-        // Semantic colors (warm variants)
+        // Semantic colors
         success: {
-          DEFAULT: "hsl(85, 60%, 55%)",   // Warm sage green
-          foreground: "hsl(0, 0%, 100%)",
-          light: "hsl(85, 60%, 95%)",     // Light sage for backgrounds
+          DEFAULT: "#22c55e",             // Green 500
+          foreground: "#ffffff",
+          light: "#dcfce7",               // Green 100
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e',
+          600: '#16a34a',
+          700: '#15803d',
+          800: '#166534',
+          900: '#14532d',
         },
         warning: {
-          DEFAULT: "hsl(35, 91%, 65%)",   // Using primary amber
-          foreground: "hsl(25, 20%, 20%)",
-          light: "hsl(35, 91%, 96%)",     // Light amber for backgrounds
+          DEFAULT: "#f59e0b",             // Amber 500
+          foreground: "#ffffff",
+          light: "#fef3c7",               // Amber 100
+          50: '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
         },
         error: {
-          DEFAULT: "hsl(5, 75%, 65%)",    // Soft coral red
-          foreground: "hsl(0, 0%, 100%)",
-          light: "hsl(5, 75%, 95%)",      // Light coral red for backgrounds
-        },
-        info: {
-          DEFAULT: "hsl(200, 70%, 70%)",  // Soft blue-gray
-          foreground: "hsl(0, 0%, 100%)",
-          light: "hsl(200, 70%, 95%)",    // Light blue for backgrounds
+          DEFAULT: "#ef4444",             // Red 500
+          foreground: "#ffffff",
+          light: "#fee2e2",               // Red 100
+          50: '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          300: '#fca5a5',
+          400: '#f87171',
+          500: '#ef4444',
+          600: '#dc2626',
+          700: '#b91c1c',
+          800: '#991b1b',
+          900: '#7f1d1d',
         },
         
         // UI elements
@@ -179,8 +211,10 @@ export default {
       },
       animation: {
         blob: "blob 7s infinite",
-        "fade-in": "fadeIn 0.8s ease-out",
-        "slide-up": "slideUp 0.8s ease-out 0.2s both",
+        "fade-in": "fadeIn 0.5s ease-in-out",
+        "slide-up": "slideUp 0.5s ease-out",
+        "bounce-slow": "bounce 2s infinite",
+        "pulse-slow": "pulse 3s infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "gentle-bounce": "gentleBounce 2s ease-in-out infinite",
@@ -219,24 +253,12 @@ export default {
           },
         },
         fadeIn: {
-          from: {
-            opacity: "0",
-            transform: "translateY(20px)",
-          },
-          to: {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
         slideUp: {
-          from: {
-            opacity: "0",
-            transform: "translateY(30px)",
-          },
-          to: {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
         },
         gentleBounce: {
           "0%, 100%": {
