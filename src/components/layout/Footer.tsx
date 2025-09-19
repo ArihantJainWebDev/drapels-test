@@ -80,8 +80,8 @@ const Footer = () => {
             {/* Brand Section */}
             <div className="lg:col-span-2">
               <Link href="/" className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-600 rounded-xl flex items-center justify-center">
-                  <Code className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center">
+                  <img src="/Drapels.PNG" alt="Drapels" className="w-10 h-10 md:w-12 md:h-12" />
                 </div>
                 <span className="text-2xl font-bold text-accent-800 dark:text-white">
                   Drapels

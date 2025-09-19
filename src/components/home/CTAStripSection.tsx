@@ -39,23 +39,23 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
   };
 
   return (
-    <section className="relative py-20 overflow-hidden">
+    <section className="relative py-16 overflow-hidden">
       {/* Background with Gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-600"></div>
       
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-24 h-24 bg-secondary-300/20 rounded-full blur-lg animate-bounce"></div>
-        <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-white/5 rounded-full blur-2xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-28 h-28 bg-secondary-400/15 rounded-full blur-xl animate-bounce"></div>
+        <div className="absolute top-8 left-8 w-24 h-24 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute top-32 right-16 w-20 h-20 bg-secondary-300/20 rounded-full blur-lg animate-bounce"></div>
+        <div className="absolute bottom-16 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-pulse"></div>
+        <div className="absolute bottom-8 right-8 w-24 h-24 bg-secondary-400/15 rounded-full blur-xl animate-bounce"></div>
         
         {/* Floating Icons */}
         <motion.div 
-          className="absolute top-20 left-1/3 text-white/20"
+          className="absolute top-16 left-1/3 text-white/20"
           animate={{ 
-            y: [0, -20, 0],
-            rotate: [0, 5, 0]
+            y: [0, -15, 0],
+            rotate: [0, 3, 0]
           }}
           transition={{ 
             duration: 4,
@@ -63,14 +63,14 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
             ease: "easeInOut"
           }}
         >
-          <Code className="w-8 h-8" />
+          <Code className="w-6 h-6" />
         </motion.div>
         
         <motion.div 
-          className="absolute bottom-32 right-1/3 text-white/20"
+          className="absolute bottom-24 right-1/3 text-white/20"
           animate={{ 
-            y: [0, 15, 0],
-            rotate: [0, -5, 0]
+            y: [0, 12, 0],
+            rotate: [0, -3, 0]
           }}
           transition={{ 
             duration: 3,
@@ -79,14 +79,14 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
             delay: 1
           }}
         >
-          <Trophy className="w-10 h-10" />
+          <Trophy className="w-8 h-8" />
         </motion.div>
         
         <motion.div 
-          className="absolute top-1/2 left-20 text-white/15"
+          className="absolute top-1/2 left-16 text-white/15"
           animate={{ 
-            y: [0, -10, 0],
-            x: [0, 10, 0]
+            y: [0, -8, 0],
+            x: [0, 8, 0]
           }}
           transition={{ 
             duration: 5,
@@ -95,11 +95,11 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
             delay: 2
           }}
         >
-          <Sparkles className="w-6 h-6" />
+          <Sparkles className="w-5 h-5" />
         </motion.div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center"
           initial={{ opacity: 0, y: 30 }}
@@ -111,30 +111,30 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-8"
+            className="mb-6"
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
               Ready to start building with{' '}
               <span className="relative">
                 <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
                   Drapels?
                 </span>
                 <motion.div 
-                  className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-yellow-300 to-orange-300 rounded-full"
+                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-yellow-300 to-orange-300 rounded-full"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ duration: 0.8, delay: 0.8 }}
                 ></motion.div>
               </span>
             </h2>
-            <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
               Join thousands of developers today and accelerate your coding journey with our comprehensive ecosystem
             </p>
           </motion.div>
 
           {/* Stats */}
           <motion.div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -148,13 +148,13 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl text-white mb-4 group-hover:bg-white/30 transition-all duration-300">
-                    <Icon className="w-8 h-8" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl text-white mb-3 group-hover:bg-white/30 transition-all duration-300">
+                    <Icon className="w-6 h-6" />
                   </div>
-                  <div className="text-3xl md:text-4xl font-bold text-white mb-2">
+                  <div className="text-2xl md:text-3xl font-bold text-white mb-1">
                     {stat.number}
                   </div>
-                  <div className="text-white/80 font-medium">
+                  <div className="text-white/80 font-medium text-sm">
                     {stat.label}
                   </div>
                 </motion.div>
@@ -164,7 +164,7 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
 
           {/* CTA Buttons */}
           <motion.div 
-            className="flex flex-col sm:flex-row gap-6 justify-center mb-12"
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-10"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -175,10 +175,9 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
             >
               <Button
                 onClick={handleSignUp}
-                size="lg"
-                className="bg-white text-primary-600 hover:bg-gray-50 font-bold px-12 py-4 text-lg rounded-2xl shadow-2xl hover:shadow-white/20 transition-all duration-300 group"
+                className="bg-white text-primary-600 hover:bg-gray-50 font-bold px-8 py-3 text-base rounded-xl shadow-2xl hover:shadow-white/20 transition-all duration-300 group"
               >
-                <Rocket className="w-6 h-6 mr-3 group-hover:translate-x-1 transition-transform" />
+                <Rocket className="w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform" />
                 Sign Up Free
               </Button>
             </motion.div>
@@ -190,54 +189,53 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
               <Button
                 onClick={handleExplore}
                 variant="outline"
-                size="lg"
-                className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm font-bold px-12 py-4 text-lg rounded-2xl transition-all duration-300 group"
+                className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm font-bold px-8 py-3 text-base rounded-xl transition-all duration-300 group"
               >
                 Explore Now
-                <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </motion.div>
           </motion.div>
 
           {/* Trust Indicators */}
           <motion.div 
-            className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-white/80"
+            className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-6 text-white/80 text-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <div className="flex items-center space-x-2">
-              <div className="flex -space-x-2">
+              <div className="flex -space-x-1">
                 {[1, 2, 3, 4, 5].map((i) => (
                   <div 
                     key={i}
-                    className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full border-2 border-white flex items-center justify-center"
+                    className="w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full border border-white flex items-center justify-center"
                   >
-                    <Star className="w-4 h-4 text-white fill-current" />
+                    <Star className="w-3 h-3 text-white fill-current" />
                   </div>
                 ))}
               </div>
-              <span className="font-semibold">4.9/5 from 10K+ reviews</span>
+              <span className="font-medium">4.9/5 from 10K+ reviews</span>
             </div>
             
             <div className="flex items-center space-x-2">
-              <Zap className="w-5 h-5 text-yellow-300" />
-              <span className="font-semibold">Free to start • No credit card required</span>
+              <Zap className="w-4 h-4 text-yellow-300" />
+              <span className="font-medium">Free to start • No credit card required</span>
             </div>
           </motion.div>
 
           {/* Scroll Indicator */}
           <motion.div 
-            className="mt-16"
+            className="mt-12"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1 }}
           >
-            <div className="text-white/60 text-sm font-medium mb-4">
+            <div className="text-white/60 text-xs font-medium mb-3">
               Trusted by developers worldwide
             </div>
             <motion.div 
-              className="w-1 h-8 bg-white/30 rounded-full mx-auto"
+              className="w-0.5 h-6 bg-white/30 rounded-full mx-auto"
               animate={{ 
                 scaleY: [1, 0.5, 1],
                 opacity: [0.3, 0.8, 0.3]

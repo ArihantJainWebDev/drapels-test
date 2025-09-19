@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Code, BrainCircuit, Bot, BookOpen, Briefcase, Mail, Users, BookMarked, FileText, Building2, ArrowRight, Sparkles, Zap, Target, Award, TrendingUp, Rocket, Play } from 'lucide-react';
+import { ArrowRight, Play, Star, Users, Code, Target, BrainCircuit, Sparkles, Zap, Bot, FileText, TrendingUp, Building2, Mail, Crown, ChevronRight, Award, Book } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface HeroSectionProps {
@@ -13,108 +13,6 @@ interface HeroSectionProps {
 
 const HeroSection = ({ user, t }: HeroSectionProps) => {
   const router = useRouter();
-
-  const mainFeatures = [
-    {
-      icon: <BrainCircuit className="w-6 h-6" />,
-      title: "AI-Powered Learning",
-      description: "Smart algorithms adapt to your learning style, providing personalized challenges and instant feedback",
-      color: "primary",
-      stats: "50K+ Problems Solved",
-      bgGradient: "from-primary-100 to-primary-50"
-    },
-    {
-      icon: <Code className="w-6 h-6" />,
-      title: "Live Coding Environment",
-      description: "Practice in our advanced IDE with real-time collaboration and 40+ programming languages",
-      color: "secondary",
-      stats: "15+ Languages",
-      bgGradient: "from-secondary-100 to-secondary-50"
-    },
-    {
-      icon: <Target className="w-6 h-6" />,
-      title: "Interview Simulation",
-      description: "Experience real tech interviews with AI-powered mock sessions from top companies",
-      color: "accent",
-      stats: "500+ Companies",
-      bgGradient: "from-accent-100 to-accent-50"
-    }
-  ];
-
-  const aiTools = [
-    { 
-      name: 'Neuron DSA Solver', 
-      icon: <BrainCircuit className="w-5 h-5" />, 
-      tag: 'AI-Powered',
-      description: 'Solve complex algorithms with AI guidance'
-    },
-    { 
-      name: 'Mock Interview AI', 
-      icon: <Bot className="w-5 h-5" />, 
-      tag: 'Interactive',
-      description: 'Practice with realistic interview scenarios'
-    },
-    { 
-      name: 'Smart Quiz Engine', 
-      icon: <Sparkles className="w-5 h-5" />, 
-      tag: 'Adaptive',
-      description: 'Personalized quizzes that adapt to your level'
-    },
-    { 
-      name: 'Code Review AI', 
-      icon: <Zap className="w-5 h-5" />, 
-      tag: 'Instant',
-      description: 'Get immediate feedback on your code quality'
-    },
-  ];
-
-  const practiceTools = [
-    { 
-      name: 'Cloud Compiler', 
-      icon: <Code className="w-5 h-5" />, 
-      users: '25K+',
-      description: 'Multi-language compiler with zero setup'
-    },
-    { 
-      name: 'Problem Bank', 
-      icon: <FileText className="w-5 h-5" />, 
-      users: '10K+',
-      description: 'Curated problems from top tech companies'
-    },
-    { 
-      name: 'Learning Paths', 
-      icon: <TrendingUp className="w-5 h-5" />, 
-      users: '15K+',
-      description: 'Structured courses for systematic learning'
-    },
-  ];
-
-  const careerTools = [
-    { 
-      name: 'Company Insights', 
-      icon: <Building2 className="w-5 h-5" />, 
-      badge: 'Hot',
-      premium: false
-    },
-    { 
-      name: 'Resume Builder', 
-      icon: <FileText className="w-5 h-5" />, 
-      badge: 'New',
-      premium: true
-    },
-    { 
-      name: 'Email Templates', 
-      icon: <Mail className="w-5 h-5" />, 
-      badge: '',
-      premium: false
-    },
-    { 
-      name: 'Peer Network', 
-      icon: <Users className="w-5 h-5" />, 
-      badge: 'Trending',
-      premium: false
-    },
-  ];
 
   const stats = [
     { number: '100K+', label: 'Active Learners', icon: <Users className="w-5 h-5" /> },
@@ -156,197 +54,241 @@ const HeroSection = ({ user, t }: HeroSectionProps) => {
   };
 
   return (
-    <section id="home" className="relative overflow-hidden pt-32 pb-16 bg-gradient-to-br from-white via-primary-50/30 to-accent-50/30 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 min-h-screen">
-      {/* Enhanced Background Elements */}
+    <section className="relative min-h-[85vh] bg-gradient-to-br from-white via-primary-50/20 to-accent-50/20 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-hidden w-full mx-auto">
+      {/* Simplified Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-20 w-72 h-72 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob dark:bg-primary/30 dark:opacity-40"></div>
-        <div className="absolute top-40 right-80 w-72 h-72 bg-accent/20 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob animation-delay-2000 dark:bg-accent/30 dark:opacity-40"></div>
-        <div className="absolute -bottom-20 left-20 w-72 h-72 bg-secondary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob animation-delay-4000 dark:bg-secondary/30 dark:opacity-40"></div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-32 left-1/4 w-4 h-4 bg-primary/40 rounded-full opacity-20 animate-float"></div>
-        <div className="absolute top-64 right-1/3 w-6 h-6 bg-accent/40 rounded-full opacity-30 animate-float animation-delay-1000"></div>
-        <div className="absolute bottom-40 left-1/3 w-3 h-3 bg-secondary/40 rounded-full opacity-25 animate-float animation-delay-2000"></div>
+        <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob dark:bg-primary/20"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-72 h-72 bg-accent/10 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000 dark:bg-accent/20"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Content */}
+      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 max-w-7xl">
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
+          {/* Left Column - Main Content */}
           <motion.div 
-            className="space-y-8 animate-fade-in"
+            className="space-y-6 w-full"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
-            <div className="space-y-4">
-              <motion.div variants={itemVariants}>
-                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30 px-4 py-2 rounded-full border border-primary/20">
-                  <Sparkles className="w-4 h-4 text-accent-600" />
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    AI-Powered Developer Ecosystem
-                  </span>
-                </div>
-              </motion.div>
-              
-              <motion.h1 
-                className="text-4xl md:text-5xl lg:text-6xl font-poppins font-bold leading-tight"
-                variants={itemVariants}
-              >
-                <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
-                  Build. Collaborate. Grow
-                </span>
-                <br />
-                <span className="text-gray-900 dark:text-white">with Drapels</span>
-              </motion.h1>
-              
-              <motion.p 
-                className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed"
-                variants={itemVariants}
-              >
-                Experience the future of development with our revolutionary AI ecosystem. 
-                Master tools, solve challenges, and launch your career with personalized guidance.
-              </motion.p>
-            </div>
+            <motion.div
+              className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/10 text-primary-600 text-sm font-medium border border-primary/20"
+              variants={itemVariants}
+            >
+              <Star className="w-3.5 h-3.5 mr-2" />
+              #1 Developer Learning Platform
+            </motion.div>
 
-            {/* CTA Buttons */}
+            <motion.h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-poppins font-bold leading-[1.1]"
+              variants={itemVariants}
+            >
+              <span className="text-gray-900 dark:text-white">Build.</span>{" "}
+              <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
+                Collaborate.
+              </span>{" "}
+              <br />
+              <span className="text-gray-900 dark:text-white">Grow with</span>{" "}
+              <span className="bg-gradient-to-r from-accent-600 to-secondary-600 bg-clip-text text-transparent">
+                Drapels.
+              </span>
+            </motion.h1>
+
+            <motion.p 
+              className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed"
+              variants={itemVariants}
+            >
+              Master coding interviews, build real projects, and accelerate your tech career with AI-powered tools and a thriving developer community.
+            </motion.p>
+
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 pt-2"
               variants={itemVariants}
             >
               <Button
-                onClick={() => goOrLogin("/get-started")}
-                className="group bg-primary-600 hover:bg-primary-700 text-white font-semibold px-8 py-4 text-lg rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-primary/20 flex items-center justify-center space-x-2"
-                size="lg"
+                onClick={() => goOrLogin('/dashboard')}
+                className="bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 text-white font-semibold px-6 py-3 text-base rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
               >
-                <span>Start Learning</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                {user ? 'Go to Dashboard' : 'Start Learning Free'}
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
               
               <Button
-                onClick={() => goOrLogin("/tools")}
+                onClick={() => router.push('/demo')}
                 variant="outline"
-                className="group border-2 border-accent-600 text-accent-600 hover:bg-accent-600 hover:text-white font-semibold px-8 py-4 text-lg rounded-xl transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2"
-                size="lg"
+                className="border-2 border-gray-300 dark:border-gray-600 hover:border-primary-500 dark:hover:border-primary-400 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-semibold px-6 py-3 text-base rounded-xl transition-all duration-300 hover:scale-105 group"
               >
-                <Play className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
-                <span>Explore Ecosystem</span>
+                <Play className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                Watch Demo
               </Button>
             </motion.div>
 
-            {/* Stats */}
+            {/* Simplified Stats */}
             <motion.div 
-              className="flex flex-wrap gap-8 pt-8"
+              className="flex justify-between items-center pt-8 max-w-md"
               variants={itemVariants}
             >
-              {stats.map((stat, index) => (
+              {stats.slice(0, 3).map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
                     {stat.number}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">{stat.label}</div>
                 </div>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* Right Column - AI Learning Engine Illustration */}
+          {/* Right Column - Features Grid */}
           <motion.div 
-            className="relative animate-slide-up"
+            className="relative"
             variants={itemVariants}
             initial="hidden"
             animate="visible"
           >
-            <div className="relative bg-gray-50 dark:bg-gray-800 rounded-3xl p-8 shadow-2xl">
-              {/* Floating elements */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 bg-accent-500 rounded-2xl opacity-20 animate-pulse-slow"></div>
-              <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-primary-400 rounded-xl opacity-20 animate-bounce-slow"></div>
-              
-              {/* Main illustration area */}
-              <div className="aspect-square bg-white dark:bg-gray-700 rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden">
-                {/* Background pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5"></div>
-                
-                {/* Central content */}
-                <div className="relative text-center space-y-6 z-10">
-                  <motion.div 
-                    className="w-24 h-24 bg-gradient-to-br from-primary-600 to-accent-600 rounded-2xl mx-auto flex items-center justify-center shadow-lg"
-                    animate={{ 
-                      rotateY: [0, 360],
-                      scale: [1, 1.05, 1]
-                    }}
-                    transition={{ 
-                      rotateY: { duration: 8, repeat: Infinity, ease: "linear" },
-                      scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-                    }}
+            {/* Main Features Grid */}
+            <div className="bg-white/10 dark:bg-gray-800/10 backdrop-blur-sm border border-white/20 dark:border-gray-700/20 rounded-3xl p-8">
+              <div className="grid grid-cols-3 gap-4">
+                {[
+                  { 
+                    name: 'Roadmaps', 
+                    icon: <TrendingUp className="w-6 h-6" />, 
+                    color: 'from-primary-500 to-primary-600',
+                    href: '/roadmap',
+                    description: 'AI Learning Paths'
+                  },
+                  { 
+                    name: 'DSA Solver', 
+                    icon: <BrainCircuit className="w-6 h-6" />, 
+                    color: 'from-accent-500 to-accent-600',
+                    href: '/tools/dsa-solver',
+                    description: 'AI-Powered'
+                  },
+                  { 
+                    name: 'Docs', 
+                    icon: <FileText className="w-6 h-6" />, 
+                    color: 'from-secondary-500 to-secondary-600',
+                    href: '/docs',
+                    description: 'Comprehensive'
+                  },
+                  { 
+                    name: 'Problem Bank', 
+                    icon: <Code className="w-6 h-6" />, 
+                    color: 'from-primary-600 to-accent-500',
+                    href: '/tools/problems',
+                    description: '10K+ Problems'
+                  },
+                  { 
+                    name: 'Mock Interview', 
+                    icon: <Bot className="w-6 h-6" />, 
+                    color: 'from-accent-600 to-secondary-500',
+                    href: '/tools/mock-interview',
+                    description: 'AI Interview'
+                  },
+                  { 
+                    name: 'Community', 
+                    icon: <Users className="w-6 h-6" />, 
+                    color: 'from-secondary-600 to-primary-500',
+                    href: '/community',
+                    description: '100K+ Devs'
+                  },
+                  { 
+                    name: 'Compiler', 
+                    icon: <Zap className="w-6 h-6" />, 
+                    color: 'from-primary-500 to-secondary-500',
+                    href: '/tools/compiler',
+                    description: 'Cloud IDE'
+                  },
+                  { 
+                    name: 'Career Tools', 
+                    icon: <Building2 className="w-6 h-6" />, 
+                    color: 'from-accent-500 to-primary-600',
+                    href: '/tools/career',
+                    description: 'Job Ready'
+                  },
+                  { 
+                    name: 'Courses', 
+                    icon: <Book className="w-6 h-6" />, 
+                    color: 'from-primary-600 to-accent-500',
+                    href: '/courses',
+                    description: 'Structured Courses'
+                  },
+                ].map((feature, index) => (
+                  <motion.div
+                    key={feature.name}
+                    className="group relative p-4 rounded-2xl bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-300 cursor-pointer"
+                    onClick={() => router.push(feature.href)}
+                    whileHover={{ y: -4, scale: 1.05 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.6 }}
                   >
-                    <BrainCircuit className="w-12 h-12 text-white" />
+                    <div className="text-center space-y-3">
+                      <motion.div
+                        className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl mx-auto flex items-center justify-center text-white shadow-lg`}
+                        whileHover={{ rotate: 5, scale: 1.1 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {feature.icon}
+                      </motion.div>
+                      <div>
+                        <div className="font-poppins font-semibold text-gray-900 dark:text-white text-sm mb-1">
+                          {feature.name}
+                        </div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">
+                          {feature.description}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Hover effect */}
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </motion.div>
-                  
-                  <div className="space-y-2">
-                    <div className="text-lg font-poppins font-semibold text-gray-800 dark:text-gray-200">
-                      Drapels AI Engine
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Personalized • Adaptive • Intelligent
-                    </div>
-                  </div>
-                  
-                  {/* Feature indicators */}
-                  <div className="flex justify-center space-x-4 pt-4">
-                    <motion.div 
-                      className="flex items-center space-x-2 bg-primary/10 px-3 py-1 rounded-full"
-                      animate={{ opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <Code className="w-3 h-3 text-primary-600" />
-                      <span className="text-xs text-primary-600 font-medium">Tools</span>
-                    </motion.div>
-                    <motion.div 
-                      className="flex items-center space-x-2 bg-accent/10 px-3 py-1 rounded-full"
-                      animate={{ opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                    >
-                      <Target className="w-3 h-3 text-accent-600" />
-                      <span className="text-xs text-accent-600 font-medium">Challenges</span>
-                    </motion.div>
-                    <motion.div 
-                      className="flex items-center space-x-2 bg-secondary/10 px-3 py-1 rounded-full"
-                      animate={{ opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    >
-                      <Users className="w-3 h-3 text-secondary-600" />
-                      <span className="text-xs text-secondary-600 font-medium">Community</span>
-                    </motion.div>
-                  </div>
-                </div>
-                
-                {/* Floating particles */}
-                <motion.div 
-                  className="absolute top-8 right-8 w-3 h-3 bg-primary/40 rounded-full"
-                  animate={{ 
-                    y: [0, -10, 0],
-                    opacity: [0.4, 0.8, 0.4]
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <motion.div 
-                  className="absolute bottom-12 left-8 w-2 h-2 bg-accent/40 rounded-full"
-                  animate={{ 
-                    y: [0, -8, 0],
-                    opacity: [0.3, 0.7, 0.3]
-                  }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                />
-                <motion.div 
-                  className="absolute top-1/2 right-12 w-4 h-4 bg-secondary/30 rounded-full"
-                  animate={{ 
-                    x: [0, 8, 0],
-                    opacity: [0.2, 0.6, 0.2]
-                  }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                />
+                ))}
               </div>
+              
+              {/* Bottom CTA */}
+              <motion.div
+                className="text-center mt-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <Button
+                  onClick={() => router.push('/tools')}
+                  variant="outline"
+                  className="bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border-white/30 dark:border-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-gray-800/30 font-medium px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105"
+                >
+                  Explore All Features
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </motion.div>
             </div>
+
+            {/* Floating Elements */}
+            <motion.div 
+              className="absolute -top-4 -right-4 w-16 h-16 bg-primary/10 rounded-2xl opacity-60 backdrop-blur-sm"
+              animate={{ 
+                y: [0, -10, 0],
+                rotate: [0, 5, 0]
+              }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div 
+              className="absolute -bottom-4 -left-4 w-12 h-12 bg-accent/10 rounded-xl opacity-60 backdrop-blur-sm"
+              animate={{ 
+                y: [0, 10, 0],
+                rotate: [0, -5, 0]
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            />
+            <motion.div 
+              className="absolute top-1/2 -right-6 w-8 h-8 bg-secondary/10 rounded-lg opacity-40 backdrop-blur-sm"
+              animate={{ 
+                x: [0, 8, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            />
           </motion.div>
         </div>
       </div>

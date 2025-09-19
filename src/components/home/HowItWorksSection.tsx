@@ -201,44 +201,6 @@ const HowItWorksSection = ({ user, t }: HowItWorksSectionProps) => {
             })}
           </div>
         </motion.div>
-
-        {/* Bottom CTA */}
-        <motion.div 
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-        >
-          <div className="bg-gradient-to-r from-primary-500/10 to-secondary-500/10 dark:from-primary-500/20 dark:to-secondary-500/20 rounded-2xl p-8 border border-primary-200 dark:border-primary-700">
-            <div className="flex items-center justify-center mb-4">
-              <Sparkles className="w-6 h-6 text-primary-500 mr-2" />
-              <span className="text-lg font-semibold text-primary-600 dark:text-primary-400">
-                Ready to get started?
-              </span>
-            </div>
-            <p className="text-accent-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
-              Join thousands of developers who are already building, collaborating, and growing with Drapels
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-primary-500 hover:bg-primary-600 text-white font-semibold px-8 py-3 rounded-xl transition-colors duration-300 flex items-center justify-center"
-              >
-                Start Exploring
-                <Target className="w-5 h-5 ml-2" />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="border-2 border-secondary-500 text-secondary-600 hover:bg-secondary-50 dark:hover:bg-secondary-900/20 font-semibold px-8 py-3 rounded-xl transition-colors duration-300 flex items-center justify-center"
-              >
-                View Challenges
-                <Trophy className="w-5 h-5 ml-2" />
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
