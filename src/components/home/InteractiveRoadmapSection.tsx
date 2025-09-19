@@ -301,135 +301,162 @@ const InteractiveRoadmapSection = ({ user, t }: InteractiveRoadmapSectionProps) 
             </div>
           </div>
 
-          {/* Horizontal U-Shaped Roadmap */}
-          <div className="relative overflow-x-auto pb-4">
-            <div className="min-w-[800px] relative">
-              {/* SVG Path for U-Shape */}
-              <svg 
-                className="absolute inset-0 w-full h-full pointer-events-none" 
-                viewBox="0 0 800 400" 
-                preserveAspectRatio="none"
-              >
-                <defs>
-                  <linearGradient id="roadmapGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#3b82f6" />
-                    <stop offset="50%" stopColor="#8b5cf6" />
-                    <stop offset="100%" stopColor="#f59e0b" />
-                  </linearGradient>
-                </defs>
-                {/* Background Path */}
-                <path
-                  d="M 50 100 Q 50 50, 100 50 L 300 50 Q 400 50, 400 150 Q 400 250, 500 250 L 700 250 Q 750 250, 750 200"
-                  stroke="#e5e7eb"
-                  strokeWidth="3"
-                  fill="none"
-                  className="dark:stroke-gray-600"
-                />
-                {/* Animated Progress Path */}
-                <path
-                  d="M 50 100 Q 50 50, 100 50 L 300 50 Q 400 50, 400 150 Q 400 250, 500 250 L 700 250 Q 750 250, 750 200"
-                  stroke="url(#roadmapGradient)"
-                  strokeWidth="4"
-                  fill="none"
-                  strokeDasharray="1000"
-                  strokeDashoffset={1000 - (currentStep / (roadmapSteps.length - 1)) * 1000}
-                  className="transition-all duration-2000 ease-out"
-                />
-              </svg>
+          {/* Vertical Zigzag Roadmap */}
+          <div className="relative">
+            {/* SVG Path for Zigzag */}
+            <svg 
+              className="absolute left-1/2 transform -translate-x-1/2 w-4 pointer-events-none" 
+              style={{ height: `${roadmapSteps.length * 120}px` }}
+              viewBox={`0 0 100 ${roadmapSteps.length * 120}`}
+              preserveAspectRatio="none"
+            >
+              <defs>
+                <linearGradient id="zigzagGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#3b82f6" />
+                  <stop offset="50%" stopColor="#8b5cf6" />
+                  <stop offset="100%" stopColor="#f59e0b" />
+                </linearGradient>
+              </defs>
+              {/* Background Path */}
+              <path
+                d={`M 50 20 ${roadmapSteps.map((_, i) => {
+                  const y = 20 + i * 120;
+                  const x = i % 2 === 0 ? 20 : 80;
+                  const nextY = 20 + (i + 1) * 120;
+                  const nextX = (i + 1) % 2 === 0 ? 20 : 80;
+                  return i < roadmapSteps.length - 1 ? `Q 50 ${y + 60}, ${nextX} ${nextY}` : '';
+                }).join(' ')}`}
+                stroke="#e5e7eb"
+                strokeWidth="3"
+                fill="none"
+                className="dark:stroke-gray-600"
+              />
+              {/* Animated Progress Path */}
+              <path
+                d={`M 50 20 ${roadmapSteps.map((_, i) => {
+                  const y = 20 + i * 120;
+                  const x = i % 2 === 0 ? 20 : 80;
+                  const nextY = 20 + (i + 1) * 120;
+                  const nextX = (i + 1) % 2 === 0 ? 20 : 80;
+                  return i < roadmapSteps.length - 1 ? `Q 50 ${y + 60}, ${nextX} ${nextY}` : '';
+                }).join(' ')}`}
+                stroke="url(#zigzagGradient)"
+                strokeWidth="4"
+                fill="none"
+                strokeDasharray="2000"
+                strokeDashoffset={2000 - (currentStep / (roadmapSteps.length - 1)) * 2000}
+                className="transition-all duration-2000 ease-out"
+              />
+            </svg>
 
-              {/* Step Positions */}
-              <div className="relative h-96">
-                {roadmapSteps.map((step, index) => {
-                  const status = getStepStatus(index);
-                  const isActive = index === currentStep;
-                  
-                  // Calculate positions for U-shape
-                  const positions = [
-                    { x: 50, y: 100 },   // Start (top-left)
-                    { x: 150, y: 50 },   // Top curve
-                    { x: 300, y: 50 },   // Top straight
-                    { x: 400, y: 150 },  // Middle curve (bottom of U)
-                    { x: 500, y: 250 },  // Bottom straight
-                    { x: 650, y: 250 },  // Bottom curve
-                    { x: 750, y: 200 }   // End (top-right)
-                  ];
-                  
-                  const position = positions[index];
-                  
-                  return (
+            {/* Steps */}
+            <div className="space-y-8">
+              {roadmapSteps.map((step, index) => {
+                const status = getStepStatus(index);
+                const isActive = index === currentStep;
+                const isRight = index % 2 === 1;
+                
+                return (
+                  <motion.div
+                    key={step.id}
+                    className={`relative flex items-center ${isRight ? 'flex-row-reverse' : 'flex-row'} gap-8`}
+                    initial={{ opacity: 0, x: isRight ? 50 : -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.2, duration: 0.6 }}
+                  >
+                    {/* Step Content Card */}
                     <motion.div
-                      key={step.id}
-                      className="absolute transform -translate-x-1/2 -translate-y-1/2"
-                      style={{ left: position.x, top: position.y }}
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.2, duration: 0.6 }}
+                      className={`flex-1 max-w-md p-6 rounded-xl shadow-lg border transition-all duration-300 cursor-pointer ${
+                        isActive 
+                          ? 'bg-primary-50 dark:bg-primary-900/30 border-primary-200 dark:border-primary-700 scale-105 shadow-xl' 
+                          : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-xl hover:scale-102'
+                      }`}
+                      onClick={() => handleStepClick(index)}
+                      whileHover={{ scale: isActive ? 1.05 : 1.02 }}
                     >
-                      {/* Step Circle */}
-                      <motion.div
-                        className={`relative w-16 h-16 rounded-full border-4 flex items-center justify-center cursor-pointer transition-all duration-300 ${getStatusColor(status)} ${
-                          isActive ? 'scale-110 shadow-lg' : 'hover:scale-105'
-                        }`}
-                        onClick={() => handleStepClick(index)}
-                        whileHover={{ scale: isActive ? 1.1 : 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        {getStatusIcon(status)}
-                        {isActive && (
-                          <motion.div
-                            className="absolute inset-0 rounded-full border-4 border-primary-400"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          />
-                        )}
-                      </motion.div>
-
-                      {/* Step Card */}
-                      <motion.div
-                        className={`absolute mt-4 w-48 p-4 rounded-xl shadow-lg border transition-all duration-300 ${
-                          isActive 
-                            ? 'bg-primary-50 dark:bg-primary-900/30 border-primary-200 dark:border-primary-700 scale-105' 
-                            : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-xl'
-                        }`}
-                        style={{ 
-                          left: index < 3 ? '0' : index === 3 ? '-50%' : '-100%',
-                          transform: index < 3 ? 'translateX(0)' : index === 3 ? 'translateX(50%)' : 'translateX(100%)'
-                        }}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.2 + 0.3, duration: 0.6 }}
-                      >
-                        <div className="text-center">
-                          <h4 className="font-semibold text-gray-900 dark:text-white text-sm mb-1">
-                            {step.title}
-                          </h4>
-                          <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-                            {step.description}
-                          </p>
-                          <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${step.color} text-white mb-2`}>
-                            {React.cloneElement(step.icon, { className: "w-3 h-3" })}
-                            <span className="ml-1">{step.tool}</span>
+                      <div className={`${isRight ? 'text-right' : 'text-left'}`}>
+                        <div className="flex items-center gap-3 mb-3">
+                          {!isRight && (
+                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${step.color} flex items-center justify-center text-white shadow-lg`}>
+                              {step.icon}
+                            </div>
+                          )}
+                          <div className={`flex-1 ${isRight ? 'text-right' : 'text-left'}`}>
+                            <h4 className="font-semibold text-gray-900 dark:text-white text-lg mb-1">
+                              {step.title}
+                            </h4>
+                            <div className={`flex items-center gap-2 ${isRight ? 'justify-end' : 'justify-start'}`}>
+                              <span className="text-sm text-gray-600 dark:text-gray-400">
+                                {step.duration}
+                              </span>
+                              {isActive && (
+                                <div className="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></div>
+                              )}
+                            </div>
                           </div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">
-                            {step.duration}
+                          {isRight && (
+                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${step.color} flex items-center justify-center text-white shadow-lg`}>
+                              {step.icon}
+                            </div>
+                          )}
+                        </div>
+                        
+                        <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+                          {step.description}
+                        </p>
+                        
+                        <div className={`flex items-center gap-3 ${isRight ? 'justify-end' : 'justify-start'}`}>
+                          <div className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-gradient-to-r ${step.color} text-white`}>
+                            {React.cloneElement(step.icon, { className: "w-4 h-4 mr-2" })}
+                            {step.tool}
                           </div>
+                          
                           {status === 'current' && (
                             <Button
                               onClick={(e) => {
                                 e.stopPropagation();
                                 router.push('/tools');
                               }}
-                              className="mt-2 text-xs px-3 py-1 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors w-full"
+                              className="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors text-sm font-medium"
                             >
                               Start Now
                             </Button>
                           )}
                         </div>
-                      </motion.div>
+                      </div>
                     </motion.div>
-                  );
-                })}
-              </div>
+
+                    {/* Center Step Circle */}
+                    <motion.div
+                      className={`relative w-16 h-16 rounded-full border-4 flex items-center justify-center cursor-pointer transition-all duration-300 ${getStatusColor(status)} ${
+                        isActive ? 'scale-110 shadow-lg' : 'hover:scale-105'
+                      } z-10 bg-white dark:bg-gray-800`}
+                      onClick={() => handleStepClick(index)}
+                      whileHover={{ scale: isActive ? 1.1 : 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.2 + 0.3, duration: 0.6 }}
+                    >
+                      {getStatusIcon(status)}
+                      {isActive && (
+                        <motion.div
+                          className="absolute inset-0 rounded-full border-4 border-primary-400"
+                          animate={{ scale: [1, 1.3, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        />
+                      )}
+                      {/* Step Number */}
+                      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-gray-500 dark:text-gray-400">
+                        {index + 1}
+                      </div>
+                    </motion.div>
+
+                    {/* Spacer for opposite side */}
+                    <div className="flex-1 max-w-md"></div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
