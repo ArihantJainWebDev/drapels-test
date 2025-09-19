@@ -229,32 +229,32 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
       {discussions.slice(0, 3).map((discussion) => (
         <motion.div
           key={discussion.id}
-          className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 cursor-pointer group shadow-sm hover:shadow-lg"
+          className="bg-white dark:bg-gray-800 rounded-lg p-3 sm:p-4 border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 cursor-pointer group shadow-sm hover:shadow-lg"
           onClick={() => handleDiscussionClick(discussion)}
           whileHover={{ y: -2 }}
         >
-          <div className="flex items-start space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full flex items-center justify-center text-white text-xs font-semibold">
+          <div className="flex items-start space-x-2 sm:space-x-3">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full flex items-center justify-center text-white text-xs font-semibold flex-shrink-0">
               {discussion.avatar}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-center space-x-2 mb-1">
-                <h3 className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-1">
+              <div className="flex items-start space-x-2 mb-1">
+                <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2 flex-1">
                   {discussion.title}
                 </h3>
                 {discussion.isHot && (
-                  <span className="px-1.5 py-0.5 bg-red-100 text-red-600 text-xs font-semibold rounded-full flex items-center">
-                    🔥 Hot
+                  <span className="px-1.5 py-0.5 bg-red-100 text-red-600 text-xs font-semibold rounded-full flex items-center flex-shrink-0">
+                    🔥 <span className="hidden sm:inline ml-1">Hot</span>
                   </span>
                 )}
               </div>
-              <div className="flex items-center space-x-3 text-xs text-gray-500 dark:text-gray-400 mb-2">
-                <span>by {discussion.author}</span>
-                <span>in {discussion.category}</span>
+              <div className="flex items-center space-x-2 sm:space-x-3 text-xs text-gray-500 dark:text-gray-400 mb-2 flex-wrap">
+                <span className="truncate">by {discussion.author}</span>
+                <span className="hidden sm:inline">in {discussion.category}</span>
                 <span>{discussion.timeAgo}</span>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3 text-xs text-gray-500 dark:text-gray-400">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center space-x-2 sm:space-x-3 text-xs text-gray-500 dark:text-gray-400">
                   <div className="flex items-center space-x-1">
                     <MessageCircle className="w-3 h-3" />
                     <span>{discussion.replies}</span>
@@ -263,13 +263,13 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
                     <Heart className="w-3 h-3" />
                     <span>{discussion.likes}</span>
                   </div>
-                  <div className="flex items-center space-x-1">
+                  <div className="hidden sm:flex items-center space-x-1">
                     <Eye className="w-3 h-3" />
                     <span>{discussion.views}</span>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-1">
-                  {discussion.tags.slice(0, 2).map((tag, tagIndex) => (
+                  {discussion.tags.slice(0, window.innerWidth < 640 ? 1 : 2).map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
                       className="px-1.5 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 text-xs rounded-full"
@@ -291,13 +291,13 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
       {leaderboard.map((user) => (
         <motion.div
           key={user.id}
-          className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 cursor-pointer group shadow-sm hover:shadow-lg"
+          className="bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 cursor-pointer group shadow-sm hover:shadow-lg"
           onClick={() => handleUserClick(user.id)}
           whileHover={{ y: -2 }}
         >
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-3">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-white ${
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold text-white text-sm ${
                 user.rank === 1 ? 'bg-warning-500' :
                 user.rank === 2 ? 'bg-gray-400' :
                 user.rank === 3 ? 'bg-warning-600' :
@@ -305,21 +305,21 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
               }`}>
                 {user.rank}
               </div>
-              <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
                 {user.avatar}
               </div>
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-center space-x-2 mb-1">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+              <div className="flex items-center space-x-2 mb-1 flex-wrap">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                   {user.name}
                 </h3>
                 <span className={`px-2 py-1 ${user.badgeColor} text-white text-xs font-semibold rounded-full`}>
                   {user.badge}
                 </span>
               </div>
-              <div className="flex flex-wrap gap-2 mb-2">
-                {user.specialties.slice(0, 3).map((specialty) => (
+              <div className="flex flex-wrap gap-1 sm:gap-2 mb-2">
+                {user.specialties.slice(0, window.innerWidth < 640 ? 2 : 3).map((specialty) => (
                   <span
                     key={specialty}
                     className="px-2 py-1 bg-secondary-50 dark:bg-secondary-900/30 text-secondary-600 dark:text-secondary-400 text-xs font-medium rounded-md"
@@ -330,12 +330,12 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
               </div>
             </div>
             <div className="text-right">
-              <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+              <div className="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-400">
                 {user.points.toLocaleString()}
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">points</div>
-              <div className="flex items-center justify-end space-x-3 mt-2 text-xs text-gray-500 dark:text-gray-400">
-                <span>{user.contributions} contributions</span>
+              <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">points</div>
+              <div className="flex flex-col sm:flex-row items-end sm:items-center justify-end space-y-1 sm:space-y-0 sm:space-x-3 mt-2 text-xs text-gray-500 dark:text-gray-400">
+                <span className="hidden sm:inline">{user.contributions} contributions</span>
                 <span>{user.streak} day streak</span>
               </div>
             </div>
@@ -352,20 +352,20 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
         return (
           <motion.div
             key={achievement.id}
-            className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 cursor-pointer group shadow-sm hover:shadow-lg"
+            className="bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 cursor-pointer group shadow-sm hover:shadow-lg"
             onClick={() => handleUserClick(achievement.id)}
             whileHover={{ y: -2 }}
           >
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
                 {achievement.avatar}
               </div>
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${achievement.color} bg-opacity-10`}>
-                <Icon className={`w-6 h-6 ${achievement.color}`} />
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center ${achievement.color} bg-opacity-10`}>
+                <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${achievement.color}`} />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center space-x-2 mb-1">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <div className="flex items-center space-x-2 mb-1 flex-wrap">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
                     {achievement.user}
                   </h3>
                   <span className="text-sm text-gray-500 dark:text-gray-400">
@@ -375,10 +375,10 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
                     {achievement.achievement}
                   </span>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-2">
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-2">
                   {achievement.description}
                 </p>
-                <div className="flex items-center space-x-3 text-sm text-gray-500 dark:text-gray-400">
+                <div className="flex items-center space-x-2 sm:space-x-3 text-sm text-gray-500 dark:text-gray-400 flex-wrap">
                   <span>{achievement.timeAgo}</span>
                   <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                     achievement.rarity === 'Legendary' ? 'bg-warning-100 text-warning-700' :
@@ -450,7 +450,7 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
 
         {/* Community Stats */}
         <motion.div 
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
+          className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -460,12 +460,12 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="bg-white dark:bg-gray-800 rounded-xl p-4 text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100 dark:border-gray-700"
+              className="bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-4 text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border border-gray-100 dark:border-gray-700"
             >
-              <div className={`inline-flex p-2 ${stat.color} rounded-lg mb-3 shadow-lg`}>
-                <stat.icon className="w-5 h-5 text-white" />
+              <div className={`inline-flex p-1.5 sm:p-2 ${stat.color} rounded-lg mb-2 sm:mb-3 shadow-lg`}>
+                <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <div className="text-xl font-bold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent mb-1">
+              <div className="text-lg sm:text-xl font-bold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent mb-1">
                 {stat.value}
               </div>
               <div className="text-xs text-gray-600 dark:text-gray-400 font-medium">
@@ -483,7 +483,7 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <div className="flex bg-white dark:bg-gray-800 rounded-xl p-1.5 border border-gray-200 dark:border-gray-700 shadow-lg">
+          <div className="flex bg-white dark:bg-gray-800 rounded-xl p-1 sm:p-1.5 border border-gray-200 dark:border-gray-700 shadow-lg overflow-x-auto">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
@@ -491,14 +491,14 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
                   key={tab.id}
                   variant={activeTab === tab.id ? "default" : "ghost"}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 ${
+                  className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all duration-300 whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'bg-primary-500 text-white shadow-lg'
                       : 'text-gray-600 dark:text-gray-300 hover:text-primary-600'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">{tab.name}</span>
+                  <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="hidden xs:inline sm:inline">{tab.name}</span>
                 </Button>
               );
             })}
@@ -520,14 +520,14 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
 
         {/* Live Activity Feed */}
         <motion.div 
-          className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-700 mb-12"
+          className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-100 dark:border-gray-700 mb-12"
           variants={itemVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-poppins font-semibold text-gray-900 dark:text-white">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <h3 className="text-lg sm:text-xl font-poppins font-semibold text-gray-900 dark:text-white">
               Live Activity Feed
             </h3>
             <div className="flex items-center space-x-2 text-success-500">
@@ -544,23 +544,23 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
               return (
                 <motion.div
                   key={index}
-                  className="flex items-start space-x-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200"
+                  className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full flex items-center justify-center text-white text-sm font-semibold shadow-lg">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full flex items-center justify-center text-white text-sm font-semibold shadow-lg flex-shrink-0">
                     {activity.avatar}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center space-x-2 mb-1">
-                      <span className="font-medium text-gray-900 dark:text-white text-sm">
+                      <span className="font-medium text-gray-900 dark:text-white text-sm truncate">
                         {activity.user}
                       </span>
-                      <ActivityIcon className={`w-4 h-4 ${iconColor}`} />
+                      <ActivityIcon className={`w-4 h-4 ${iconColor} flex-shrink-0`} />
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
                       {activity.action}
                     </p>
                     <div className="flex items-center space-x-1 mt-1">

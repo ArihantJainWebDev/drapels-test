@@ -1,5 +1,4 @@
 "use client"
-import { motion } from 'framer-motion';
 import DarkModeToggle from '@/components/layout/DarkModeToggle';
 import CreditsDisplay from './CreditsDisplay';
 import ProfileSection from './ProfileSection';
@@ -16,7 +15,7 @@ const HeaderActions: React.FC<HeaderActionsProps> = ({ isHome, isScrolled, varia
 
   if (variant === 'mobile') {
     return (
-      <div className="lg:hidden flex items-center gap-3">
+      <div className="lg:hidden flex items-center gap-2">
         <DarkModeToggle />
         {isAuthenticated && (
           <CreditsDisplay 
@@ -30,14 +29,8 @@ const HeaderActions: React.FC<HeaderActionsProps> = ({ isHome, isScrolled, varia
   }
 
   return (
-    <div className="hidden lg:flex items-center gap-3">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5, duration: 0.4 }}
-      >
-        <DarkModeToggle />
-      </motion.div>
+    <div className="hidden lg:flex items-center gap-2">
+      <DarkModeToggle />
       
       {isAuthenticated && (
         <CreditsDisplay 
@@ -50,6 +43,7 @@ const HeaderActions: React.FC<HeaderActionsProps> = ({ isHome, isScrolled, varia
       <ProfileSection isHome={isHome} isScrolled={isScrolled} />
     </div>
   );
+
 };
 
 export default HeaderActions;

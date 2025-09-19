@@ -1,7 +1,6 @@
 "use client"
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { headerConfig } from '@/config/header/header.config';
 import { getLogoClasses, getTextColorClasses } from '@/utils/header/header.utils';
 
@@ -16,46 +15,28 @@ const HeaderLogo: React.FC<HeaderLogoProps> = ({ isHome, isScrolled }) => {
   const textColorClass = getTextColorClasses(isHome, isScrolled);
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className="flex-shrink-0"
-    >
+    <div className="flex-shrink-0">
       <Link
         href="/"
-        className="flex items-center gap-0 group pt-1 sm:pt-0"
+        className="flex items-center gap-2 group"
         aria-label={headerConfig.logo.ariaLabel}
         title={headerConfig.logo.title}
       >
-        <motion.div
-          className="relative w-14 h-14 flex items-center justify-center"
-          whileHover={{ rotate: [0, -3, 3, 0] }}
-          transition={{ duration: headerConfig.animations.logo.transition.duration }}
-        >
+        <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center">
           <Image
             src={headerConfig.logo.src}
             alt={headerConfig.logo.alt}
-            width={48}
-            height={48}
-            className={logoImgClass}
-            priority={isHome} // Only prioritize on home page
+            width={32}
+            height={32}
+            className={`${logoImgClass} w-8 h-8 sm:w-10 sm:h-10 transition-transform duration-200 group-hover:scale-105`}
+            priority={isHome}
           />
-        </motion.div>
-        <div className="block">
-          <motion.h1
-            className={`cursor-can-hover text-xl sm:text-2xl font-bold leading-normal transition-colors duration-300 ${textColorClass}`}
-            whileHover={{
-              backgroundPosition: "200% center",
-              scale: 1.02
-            }}
-            style={{ backgroundSize: "200% 200%" }}
-            transition={{ duration: 0.3 }}
-          >
-            Drapels
-          </motion.h1>
         </div>
+        <h1 className={`text-lg sm:text-xl font-bold transition-colors duration-200 ${textColorClass} group-hover:text-primary-600 dark:group-hover:text-primary-400`}>
+          Drapels
+        </h1>
       </Link>
-    </motion.div>
+    </div>
   );
 };
 

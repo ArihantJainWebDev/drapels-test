@@ -176,16 +176,16 @@ const PersonalizedFeedSection = ({ user, t }: PersonalizedFeedSectionProps) => {
   };
 
   const renderRecommended = () => (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
       {recommendedItems.map((item) => (
         <motion.div
           key={item.id}
-          className="bg-white dark:bg-accent-800 rounded-xl p-6 border border-gray-200 dark:border-accent-700 hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 cursor-pointer group"
+          className="bg-white dark:bg-accent-800 rounded-xl p-4 sm:p-6 border border-gray-200 dark:border-accent-700 hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300 cursor-pointer group"
           onClick={() => handleItemClick(item)}
           whileHover={{ y: -2 }}
         >
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex items-center space-x-2">
+          <div className="flex items-start justify-between mb-3 sm:mb-4">
+            <div className="flex items-center space-x-2 flex-wrap gap-1">
               <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                 item.type === 'tool' ? 'bg-blue-100 text-blue-700' :
                 item.type === 'challenge' ? 'bg-green-100 text-green-700' :
@@ -193,22 +193,22 @@ const PersonalizedFeedSection = ({ user, t }: PersonalizedFeedSectionProps) => {
               }`}>
                 {item.type === 'tool' ? 'Tool' : item.type === 'challenge' ? 'Challenge' : 'Doc'}
               </span>
-              <span className="text-xs text-primary-600 dark:text-primary-400 font-medium">
+              <span className="text-xs text-primary-600 dark:text-primary-400 font-medium hidden sm:inline">
                 {item.matchReason}
               </span>
             </div>
-            <Bookmark className="w-5 h-5 text-gray-400 hover:text-primary-500 cursor-pointer" />
+            <Bookmark className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 hover:text-primary-500 cursor-pointer flex-shrink-0" />
           </div>
 
-          <h3 className="text-lg font-semibold text-accent-800 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+          <h3 className="text-base sm:text-lg font-semibold text-accent-800 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2">
             {item.title}
           </h3>
-          <p className="text-accent-600 dark:text-gray-300 mb-4 line-clamp-2">
+          <p className="text-sm sm:text-base text-accent-600 dark:text-gray-300 mb-3 sm:mb-4 line-clamp-2">
             {item.description}
           </p>
 
-          <div className="flex flex-wrap gap-2 mb-4">
-            {item.tags.slice(0, 3).map((tag) => (
+          <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
+            {item.tags.slice(0, window.innerWidth < 640 ? 2 : 3).map((tag) => (
               <span
                 key={tag}
                 className="px-2 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-xs font-medium rounded-md"
@@ -218,33 +218,33 @@ const PersonalizedFeedSection = ({ user, t }: PersonalizedFeedSectionProps) => {
             ))}
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4 text-sm text-accent-500 dark:text-gray-400">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm text-accent-500 dark:text-gray-400 flex-wrap">
               {item.type === 'tool' && (
                 <>
                   <div className="flex items-center">
-                    <Star className="w-4 h-4 mr-1 text-yellow-500" />
+                    <Star className="w-3 h-3 sm:w-4 sm:h-4 mr-1 text-yellow-500" />
                     {item.rating}
                   </div>
-                  <span>{item.users} users</span>
+                  <span className="hidden sm:inline">{item.users} users</span>
                 </>
               )}
               {item.type === 'challenge' && (
                 <>
                   <span>{item.participants} joined</span>
-                  <span>{item.duration}</span>
+                  <span className="hidden sm:inline">{item.duration}</span>
                   <span className="font-semibold text-secondary-600">{item.prize}</span>
                 </>
               )}
               {item.type === 'doc' && (
                 <>
                   <span>{item.views} views</span>
-                  <span>{item.readTime} read</span>
+                  <span className="hidden sm:inline">{item.readTime} read</span>
                 </>
               )}
             </div>
-            <Button variant="ghost" size="sm" className="text-primary-600 hover:text-primary-700 p-0 h-auto">
-              <Play className="w-4 h-4 mr-1" />
+            <Button variant="ghost" size="sm" className="text-primary-600 hover:text-primary-700 p-1 sm:p-0 h-auto text-xs sm:text-sm">
+              <Play className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
               {item.type === 'tool' ? 'Try' : item.type === 'challenge' ? 'Join' : 'Read'}
             </Button>
           </div>
@@ -254,30 +254,30 @@ const PersonalizedFeedSection = ({ user, t }: PersonalizedFeedSectionProps) => {
   );
 
   const renderRecentActivity = () => (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {recentActivity.map((activity) => {
         const Icon = activity.icon;
         return (
           <motion.div
             key={activity.id}
-            className="bg-white dark:bg-accent-800 rounded-xl p-6 border border-gray-200 dark:border-accent-700 hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300"
+            className="bg-white dark:bg-accent-800 rounded-xl p-4 sm:p-6 border border-gray-200 dark:border-accent-700 hover:border-primary-300 dark:hover:border-primary-500 transition-all duration-300"
             whileHover={{ x: 5 }}
           >
-            <div className="flex items-center space-x-4">
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${activity.color} bg-opacity-10`}>
-                <Icon className={`w-6 h-6 ${activity.color}`} />
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center ${activity.color} bg-opacity-10 flex-shrink-0`}>
+                <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${activity.color}`} />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center space-x-2 mb-1">
-                  <span className="text-accent-600 dark:text-gray-300">{activity.action}</span>
-                  <span className="font-semibold text-accent-800 dark:text-white">{activity.title}</span>
+                <div className="flex items-center space-x-2 mb-1 flex-wrap">
+                  <span className="text-sm sm:text-base text-accent-600 dark:text-gray-300">{activity.action}</span>
+                  <span className="font-semibold text-sm sm:text-base text-accent-800 dark:text-white line-clamp-1">{activity.title}</span>
                 </div>
-                <div className="flex items-center space-x-4 text-sm text-accent-500 dark:text-gray-400">
+                <div className="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm text-accent-500 dark:text-gray-400 flex-wrap gap-1">
                   <span>{activity.timeAgo}</span>
-                  {activity.score && <span>Score: {activity.score}/100</span>}
+                  {activity.score && <span className="hidden sm:inline">Score: {activity.score}/100</span>}
                   {activity.rank && <span>Rank: #{activity.rank}</span>}
-                  {activity.duration && <span>Duration: {activity.duration}</span>}
-                  {activity.progress && <span>Progress: {activity.progress}%</span>}
+                  {activity.duration && <span className="hidden sm:inline">Duration: {activity.duration}</span>}
+                  {activity.progress && <span className="hidden sm:inline">Progress: {activity.progress}%</span>}
                   {activity.status && <span>Status: {activity.status}</span>}
                   {activity.rarity && (
                     <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded-full">
@@ -286,7 +286,7 @@ const PersonalizedFeedSection = ({ user, t }: PersonalizedFeedSectionProps) => {
                   )}
                 </div>
               </div>
-              <ArrowRight className="w-5 h-5 text-gray-400" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 flex-shrink-0" />
             </div>
           </motion.div>
         );
@@ -295,44 +295,44 @@ const PersonalizedFeedSection = ({ user, t }: PersonalizedFeedSectionProps) => {
   );
 
   const renderProgress = () => (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
       {/* Stats Overview */}
-      <div className="bg-white dark:bg-accent-800 rounded-xl p-6 border border-gray-200 dark:border-accent-700">
-        <h3 className="text-xl font-semibold text-accent-800 dark:text-white mb-6">Your Stats</h3>
-        <div className="grid grid-cols-2 gap-4">
+      <div className="bg-white dark:bg-accent-800 rounded-xl p-4 sm:p-6 border border-gray-200 dark:border-accent-700">
+        <h3 className="text-lg sm:text-xl font-semibold text-accent-800 dark:text-white mb-4 sm:mb-6">Your Stats</h3>
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400">
+            <div className="text-2xl sm:text-3xl font-bold text-primary-600 dark:text-primary-400">
               {progressData.currentStreak}
             </div>
-            <div className="text-sm text-accent-500 dark:text-gray-400">Day Streak</div>
+            <div className="text-xs sm:text-sm text-accent-500 dark:text-gray-400">Day Streak</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-secondary-600 dark:text-secondary-400">
+            <div className="text-2xl sm:text-3xl font-bold text-secondary-600 dark:text-secondary-400">
               {progressData.totalPoints.toLocaleString()}
             </div>
-            <div className="text-sm text-accent-500 dark:text-gray-400">Total Points</div>
+            <div className="text-xs sm:text-sm text-accent-500 dark:text-gray-400">Total Points</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-green-600">
+            <div className="text-2xl sm:text-3xl font-bold text-green-600">
               {progressData.completedChallenges}
             </div>
-            <div className="text-sm text-accent-500 dark:text-gray-400">Challenges</div>
+            <div className="text-xs sm:text-sm text-accent-500 dark:text-gray-400">Challenges</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-purple-600">
+            <div className="text-2xl sm:text-3xl font-bold text-purple-600">
               {progressData.toolsUsed}
             </div>
-            <div className="text-sm text-accent-500 dark:text-gray-400">Tools Used</div>
+            <div className="text-xs sm:text-sm text-accent-500 dark:text-gray-400">Tools Used</div>
           </div>
         </div>
 
         {/* Rank Progress */}
-        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-accent-700">
+        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-200 dark:border-accent-700">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-accent-700 dark:text-gray-300">
+            <span className="text-xs sm:text-sm font-medium text-accent-700 dark:text-gray-300">
               {progressData.rank}
             </span>
-            <span className="text-sm text-accent-500 dark:text-gray-400">
+            <span className="text-xs sm:text-sm text-accent-500 dark:text-gray-400">
               {progressData.progressToNext}% to {progressData.nextRank}
             </span>
           </div>
@@ -346,31 +346,31 @@ const PersonalizedFeedSection = ({ user, t }: PersonalizedFeedSectionProps) => {
       </div>
 
       {/* Recent Badges */}
-      <div className="bg-white dark:bg-accent-800 rounded-xl p-6 border border-gray-200 dark:border-accent-700">
-        <h3 className="text-xl font-semibold text-accent-800 dark:text-white mb-6">Recent Badges</h3>
-        <div className="space-y-4">
+      <div className="bg-white dark:bg-accent-800 rounded-xl p-4 sm:p-6 border border-gray-200 dark:border-accent-700">
+        <h3 className="text-lg sm:text-xl font-semibold text-accent-800 dark:text-white mb-4 sm:mb-6">Recent Badges</h3>
+        <div className="space-y-3 sm:space-y-4">
           {progressData.recentBadges.map((badge, index) => (
             <div key={index} className="flex items-center space-x-3">
-              <div className="text-2xl">{badge.icon}</div>
-              <div className="flex-1">
-                <div className="font-semibold text-accent-800 dark:text-white">{badge.name}</div>
-                <div className="text-sm text-accent-500 dark:text-gray-400">{badge.earned}</div>
+              <div className="text-xl sm:text-2xl">{badge.icon}</div>
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-sm sm:text-base text-accent-800 dark:text-white">{badge.name}</div>
+                <div className="text-xs sm:text-sm text-accent-500 dark:text-gray-400">{badge.earned}</div>
               </div>
-              <CheckCircle className="w-5 h-5 text-green-500" />
+              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
             </div>
           ))}
         </div>
       </div>
 
       {/* Skill Progress */}
-      <div className="lg:col-span-2 bg-white dark:bg-accent-800 rounded-xl p-6 border border-gray-200 dark:border-accent-700">
-        <h3 className="text-xl font-semibold text-accent-800 dark:text-white mb-6">Skill Progress</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="lg:col-span-2 bg-white dark:bg-accent-800 rounded-xl p-4 sm:p-6 border border-gray-200 dark:border-accent-700">
+        <h3 className="text-lg sm:text-xl font-semibold text-accent-800 dark:text-white mb-4 sm:mb-6">Skill Progress</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {progressData.skillProgress.map((skill) => (
             <div key={skill.skill}>
               <div className="flex items-center justify-between mb-2">
-                <span className="font-medium text-accent-700 dark:text-gray-300">{skill.skill}</span>
-                <span className="text-sm text-accent-500 dark:text-gray-400">{skill.level}%</span>
+                <span className="text-sm sm:text-base font-medium text-accent-700 dark:text-gray-300">{skill.skill}</span>
+                <span className="text-xs sm:text-sm text-accent-500 dark:text-gray-400">{skill.level}%</span>
               </div>
               <div className="w-full bg-gray-200 dark:bg-accent-700 rounded-full h-2">
                 <div 
@@ -390,30 +390,30 @@ const PersonalizedFeedSection = ({ user, t }: PersonalizedFeedSectionProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-accent-800 dark:text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-accent-800 dark:text-white mb-4 sm:mb-6">
             Your{' '}
             <span className="bg-gradient-to-r from-primary-500 to-secondary-600 bg-clip-text text-transparent">
               Dashboard
             </span>
           </h2>
-          <p className="text-xl text-accent-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-accent-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
             Personalized content based on your interests, recent activity, and learning progress
           </p>
         </motion.div>
 
         {/* Tabs */}
         <motion.div 
-          className="flex justify-center mb-8"
+          className="flex justify-center mb-6 sm:mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="flex bg-white dark:bg-accent-800 rounded-2xl p-2 border border-gray-200 dark:border-accent-700">
+          <div className="flex bg-white dark:bg-accent-800 rounded-2xl p-1 sm:p-2 border border-gray-200 dark:border-accent-700 overflow-x-auto">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
@@ -421,14 +421,14 @@ const PersonalizedFeedSection = ({ user, t }: PersonalizedFeedSectionProps) => {
                   key={tab.id}
                   variant={activeTab === tab.id ? "default" : "ghost"}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                  className={`flex items-center space-x-1 sm:space-x-2 px-3 sm:px-6 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 text-xs sm:text-sm whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'bg-primary-500 text-white shadow-lg'
                       : 'text-accent-600 dark:text-gray-300 hover:text-primary-600'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
-                  <span className="hidden sm:inline">{tab.name}</span>
+                  <Icon className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                  <span className="hidden xs:inline sm:inline">{tab.name}</span>
                 </Button>
               );
             })}

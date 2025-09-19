@@ -11,6 +11,7 @@ import CommunitySection from '@/components/home/CommunitySection';
 import PersonalizedFeedSection from '@/components/home/PersonalizedFeedSection';
 // import CTASection from '@/components/home/CTASection';
 import CTAStripSection from '@/components/home/CTAStripSection';
+import FAQSection from '@/components/home/FAQSection';
 
 const HomePage = () => {
   const { user } = useAuth();
@@ -22,11 +23,12 @@ const HomePage = () => {
       {/* <QuickAccessSection user={user} t={t} /> */}
       {/* <SearchFilterSection user={user} t={t} /> */}
       <FeaturesShowcaseSection user={user} t={t} />
-      <InteractiveRoadmapSection user={user} t={t} />
+      <InteractiveRoadmapSection />
       <CommunitySection user={user} t={t} />
       {user && <PersonalizedFeedSection user={user} t={t} />}
       {/* <CTASection user={user} t={t} /> */}
       <CTAStripSection user={user} t={t} />
+      <FAQSection t={t} />
     </div>
   );
 };

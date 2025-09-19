@@ -231,7 +231,7 @@ const FeaturesShowcaseSection = ({ user, t }: FeaturesShowcaseSectionProps) => {
               className="min-h-[60vh]"
             >
               <div className={`bg-gradient-to-br ${currentFeature.bgGradient} ${currentFeature.darkBgGradient} rounded-2xl p-6 lg:p-8 shadow-2xl border border-white/50 dark:border-gray-700/50`}>
-                <div className="grid lg:grid-cols-2 gap-8 items-center">
+                <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
                   {/* Left Column - Content */}
                   <div className="space-y-6">
                     <div className="flex items-center space-x-3">
@@ -253,9 +253,9 @@ const FeaturesShowcaseSection = ({ user, t }: FeaturesShowcaseSectionProps) => {
                     </p>
 
                     {/* Key Features */}
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <h4 className="text-base font-semibold text-gray-900 dark:text-white">Key Features:</h4>
-                      <div className="grid grid-cols-1 gap-1.5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
                         {currentFeature.features.slice(0, 4).map((feature, index) => (
                           <motion.div
                             key={index}
@@ -272,10 +272,10 @@ const FeaturesShowcaseSection = ({ user, t }: FeaturesShowcaseSectionProps) => {
                     </div>
 
                     {/* Stats */}
-                    <div className="flex flex-wrap gap-4">
+                    <div className="grid grid-cols-3 gap-4 sm:flex sm:flex-wrap sm:gap-6">
                       {Object.entries(currentFeature.stats).map(([key, value]) => (
                         <div key={key} className="text-center">
-                          <div className="text-xl font-bold text-gray-900 dark:text-white">{value}</div>
+                          <div className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">{value}</div>
                           <div className="text-xs text-gray-600 dark:text-gray-400 capitalize">{key}</div>
                         </div>
                       ))}
@@ -328,23 +328,52 @@ const FeaturesShowcaseSection = ({ user, t }: FeaturesShowcaseSectionProps) => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation Arrows */}
+          {/* Navigation Arrows - Hidden on mobile */}
           <button
             onClick={prevSlide}
-            className="absolute -left-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+            className="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 items-center justify-center text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute -right-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+            className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 items-center justify-center text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
+          
+          {/* Mobile Navigation Buttons */}
+          <div className="md:hidden flex justify-between items-center mt-6 px-4">
+            <button
+              onClick={prevSlide}
+              className="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <div className="flex space-x-2">
+              {features.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentSlide 
+                      ? 'bg-primary-500 w-4' 
+                      : 'bg-gray-300 dark:bg-gray-600 hover:bg-primary-300'
+                  }`}
+                />
+              ))}
+            </div>
+            <button
+              onClick={nextSlide}
+              className="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
         </div>
 
-        {/* Slide Indicators */}
-        <div className="flex justify-center mt-8 space-x-2">
+        {/* Slide Indicators - Hidden on mobile */}
+        <div className="hidden md:flex justify-center mt-8 space-x-2">
           {features.map((_, index) => (
             <button
               key={index}

@@ -75,53 +75,48 @@ const Footer = () => {
     <footer className="bg-white dark:bg-accent-900 border-t border-gray-200 dark:border-accent-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+        <div className="py-8 sm:py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8">
             {/* Brand Section */}
             <div className="lg:col-span-2">
-              <Link href="/" className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center">
-                  <img src="/Drapels.PNG" alt="Drapels" className="w-10 h-10 md:w-12 md:h-12" />
+              <Link href="/" className="flex items-center space-x-3 mb-4">
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center">
+                  <img src="/Drapels.PNG" alt="Drapels" className="w-8 h-8" />
                 </div>
-                <span className="text-2xl font-bold text-accent-800 dark:text-white">
+                <span className="text-xl font-bold text-accent-800 dark:text-white">
                   Drapels
                 </span>
               </Link>
               
-              <p className="text-accent-600 dark:text-gray-300 mb-6 max-w-md leading-relaxed">
-                Your comprehensive ecosystem for developer tools, documentation, challenges, and community. 
-                Build, collaborate, and grow with thousands of developers worldwide.
+              <p className="text-sm text-accent-600 dark:text-gray-300 mb-4 max-w-md leading-relaxed">
+                Your comprehensive ecosystem for developer tools, documentation, challenges, and community.
               </p>
 
               {/* Contact Info */}
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center space-x-3 text-accent-600 dark:text-gray-300">
-                  <Mail className="w-4 h-4" />
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center space-x-2 text-sm text-accent-600 dark:text-gray-300">
+                  <Mail className="w-3 h-3" />
                   <span>hello@drapels.com</span>
                 </div>
-                <div className="flex items-center space-x-3 text-accent-600 dark:text-gray-300">
-                  <Phone className="w-4 h-4" />
-                  <span>+1 (555) 123-4567</span>
-                </div>
-                <div className="flex items-center space-x-3 text-accent-600 dark:text-gray-300">
-                  <MapPin className="w-4 h-4" />
+                <div className="flex items-center space-x-2 text-sm text-accent-600 dark:text-gray-300">
+                  <MapPin className="w-3 h-3" />
                   <span>San Francisco, CA</span>
                 </div>
               </div>
 
               {/* Social Links */}
-              <div className="flex space-x-4">
+              <div className="flex space-x-3">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
                   return (
                     <Link
                       key={social.name}
                       href={social.href}
-                      className="w-10 h-10 bg-gray-100 dark:bg-accent-800 rounded-lg flex items-center justify-center text-accent-600 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300"
+                      className="w-8 h-8 bg-gray-100 dark:bg-accent-800 rounded-lg flex items-center justify-center text-accent-600 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Icon className="w-5 h-5" />
+                      <Icon className="w-4 h-4" />
                     </Link>
                   );
                 })}
@@ -131,21 +126,20 @@ const Footer = () => {
             {/* Footer Links */}
             {footerSections.map((section) => (
               <div key={section.title}>
-                <h3 className="text-lg font-semibold text-accent-800 dark:text-white mb-6">
+                <h3 className="text-base font-semibold text-accent-800 dark:text-white mb-3">
                   {section.title}
                 </h3>
-                <ul className="space-y-4">
-                  {section.links.map((link) => {
+                <ul className="space-y-2">
+                  {section.links.slice(0, 4).map((link) => {
                     const Icon = link.icon;
                     return (
                       <li key={link.title}>
                         <Link
                           href={link.href}
-                          className="flex items-center space-x-2 text-accent-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 group"
+                          className="flex items-center space-x-2 text-sm text-accent-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 group"
                         >
-                          {Icon && <Icon className="w-4 h-4" />}
+                          {Icon && <Icon className="w-3 h-3" />}
                           <span>{link.title}</span>
-                          <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
                         </Link>
                       </li>
                     );
@@ -157,23 +151,23 @@ const Footer = () => {
         </div>
 
         {/* Newsletter Section */}
-        <div className="py-8 border-t border-gray-200 dark:border-accent-700">
-          <div className="flex flex-col lg:flex-row items-center justify-between space-y-6 lg:space-y-0">
+        <div className="py-6 border-t border-gray-200 dark:border-accent-700">
+          <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
             <div className="text-center lg:text-left">
-              <h3 className="text-lg font-semibold text-accent-800 dark:text-white mb-2">
+              <h3 className="text-base font-semibold text-accent-800 dark:text-white mb-1">
                 Stay Updated
               </h3>
-              <p className="text-accent-600 dark:text-gray-300">
-                Get the latest tools, challenges, and community updates delivered to your inbox.
+              <p className="text-sm text-accent-600 dark:text-gray-300">
+                Get the latest updates delivered to your inbox.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 w-full lg:w-auto">
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full lg:w-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="px-4 py-3 border border-gray-300 dark:border-accent-600 rounded-lg bg-white dark:bg-accent-800 text-accent-800 dark:text-white placeholder-accent-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-0 sm:w-80"
+                className="px-3 py-2 text-sm border border-gray-300 dark:border-accent-600 rounded-lg bg-white dark:bg-accent-800 text-accent-800 dark:text-white placeholder-accent-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-0 sm:w-64"
               />
-              <button className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300 whitespace-nowrap">
+              <button className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 text-sm rounded-lg font-semibold transition-colors duration-300 whitespace-nowrap">
                 Subscribe
               </button>
             </div>
@@ -181,29 +175,25 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="py-6 border-t border-gray-200 dark:border-accent-700">
-          <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-accent-500 dark:text-gray-400">
+        <div className="py-4 border-t border-gray-200 dark:border-accent-700">
+          <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
+            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 text-xs text-accent-500 dark:text-gray-400">
               <p> 2025 Drapels. {t('footer.rights') || 'All rights reserved.'}</p>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
                 <Link href="/privacy" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                  Privacy Policy
+                  Privacy
                 </Link>
                 <span>•</span>
                 <Link href="/terms" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                  Terms of Service
-                </Link>
-                <span>•</span>
-                <Link href="/cookies" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                  Cookie Policy
+                  Terms
                 </Link>
               </div>
             </div>
             
-            <div className="flex items-center space-x-2 text-sm text-accent-500 dark:text-gray-400">
+            <div className="flex items-center space-x-2 text-xs text-accent-500 dark:text-gray-400">
               <span>Made with</span>
               <span className="text-red-500">❤️</span>
-              <span>for developers worldwide</span>
+              <span>for developers</span>
             </div>
           </div>
         </div>

@@ -113,7 +113,7 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight px-4">
               Ready to start building with{' '}
               <span className="relative">
                 <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
@@ -127,14 +127,14 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
                 ></motion.div>
               </span>
             </h2>
-            <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed px-4">
               Join thousands of developers today and accelerate your coding journey with our comprehensive ecosystem
             </p>
           </motion.div>
 
           {/* Stats */}
           <motion.div 
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-10"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -148,13 +148,13 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl text-white mb-3 group-hover:bg-white/30 transition-all duration-300">
-                    <Icon className="w-6 h-6" />
+                  <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-xl text-white mb-2 sm:mb-3 group-hover:bg-white/30 transition-all duration-300">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <div className="text-2xl md:text-3xl font-bold text-white mb-1">
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">
                     {stat.number}
                   </div>
-                  <div className="text-white/80 font-medium text-sm">
+                  <div className="text-white/80 font-medium text-xs sm:text-sm">
                     {stat.label}
                   </div>
                 </motion.div>
@@ -164,7 +164,7 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
 
           {/* CTA Buttons */}
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-10"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-10 px-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -175,9 +175,9 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
             >
               <Button
                 onClick={handleSignUp}
-                className="bg-white text-primary-600 hover:bg-gray-50 font-bold px-8 py-3 text-base rounded-xl shadow-2xl hover:shadow-white/20 transition-all duration-300 group"
+                className="bg-white text-primary-600 hover:bg-gray-50 font-bold px-6 sm:px-8 py-3 text-sm sm:text-base rounded-xl shadow-2xl hover:shadow-white/20 transition-all duration-300 group w-full sm:w-auto"
               >
-                <Rocket className="w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform" />
+                <Rocket className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:translate-x-1 transition-transform" />
                 Sign Up Free
               </Button>
             </motion.div>
@@ -189,17 +189,17 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
               <Button
                 onClick={handleExplore}
                 variant="outline"
-                className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm font-bold px-8 py-3 text-base rounded-xl transition-all duration-300 group"
+                className="border-2 border-white/30 text-white bg-white/5 hover:bg-white/10 hover:border-white/50 backdrop-blur-sm font-bold px-6 sm:px-8 py-3 text-sm sm:text-base rounded-xl transition-all duration-300 group w-full sm:w-auto"
               >
                 Explore Now
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </motion.div>
           </motion.div>
 
           {/* Trust Indicators */}
           <motion.div 
-            className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-6 text-white/80 text-sm"
+            className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-6 text-white/80 text-xs sm:text-sm px-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.8 }}
@@ -209,9 +209,9 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
                 {[1, 2, 3, 4, 5].map((i) => (
                   <div 
                     key={i}
-                    className="w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full border border-white flex items-center justify-center"
+                    className="w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full border border-white flex items-center justify-center"
                   >
-                    <Star className="w-3 h-3 text-white fill-current" />
+                    <Star className="w-2 h-2 sm:w-3 sm:h-3 text-white fill-current" />
                   </div>
                 ))}
               </div>
@@ -219,8 +219,8 @@ const CTAStripSection = ({ user, t }: CTAStripSectionProps) => {
             </div>
             
             <div className="flex items-center space-x-2">
-              <Zap className="w-4 h-4 text-yellow-300" />
-              <span className="font-medium">Free to start • No credit card required</span>
+              <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-300" />
+              <span className="font-medium text-center sm:text-left">Free to start • No credit card required</span>
             </div>
           </motion.div>
 

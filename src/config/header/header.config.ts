@@ -4,26 +4,22 @@ export const headerConfig = {
     alt: "Drapels Logo",
     title: "Drapels - Empowering Tech Careers Worldwide",
     ariaLabel: "Drapels Homepage",
-    width: 48,
-    height: 48
+    width: 32,
+    height: 32
   },
   animations: {
     header: {
-      initial: { y: -100, opacity: 0 },
+      initial: { y: -20, opacity: 0 },
       animate: { y: 0, opacity: 1 },
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.4, ease: "easeOut" }
     },
     scroll: {
-      duration: 0.6,
+      duration: 0.3,
       ease: "easeOut"
     },
-    orb: {
-      duration: 12,
-      ease: "linear"
-    },
     logo: {
-      hover: { rotate: [0, -3, 3, 0] },
-      transition: { duration: 0.6 }
+      hover: { scale: 1.05 },
+      transition: { duration: 0.2 }
     },
     mobileMenu: {
       backdrop: {
@@ -37,27 +33,27 @@ export const headerConfig = {
         exit: { x: '100%', opacity: 0 },
         transition: {
           type: 'spring',
-          damping: 28,
-          stiffness: 260,
-          opacity: { duration: 0.15 }
+          damping: 30,
+          stiffness: 300,
+          opacity: { duration: 0.2 }
         }
       }
     }
   },
   styling: {
-    backdrop: "backdrop-blur-2xl",
+    backdrop: "backdrop-blur-md",
     glassmorphism: {
       home: {
-        scrolled: "bg-[#FFF8EE]/80 dark:bg-black/40",
-        default: "bg-[#FFF8EE]/70 dark:bg-black/30"
+        scrolled: "bg-white/90 dark:bg-gray-900/90",
+        default: "bg-white/80 dark:bg-gray-900/80"
       },
-      other: "bg-[#FFF8EE]/80 dark:bg-black/40"
+      other: "bg-white/90 dark:bg-gray-900/90"
     },
-    border: "border-[#EFDCC8]/60 dark:border-gray-800/40",
+    border: "border-gray-200/50 dark:border-gray-700/50",
     shadow: "shadow-sm"
   },
   navigation: {
-    activeColor: "text-[#1EB36B] dark:text-[#1EB36B]",
-    hoverColor: "hover:text-gray-900 hover:bg-[#A7F3D0]/20 dark:hover:text-white dark:hover:bg-white/5"
+    activeColor: "text-primary-600 dark:text-primary-400",
+    hoverColor: "hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800/50"
   }
 } as const;
