@@ -50,7 +50,7 @@ export function UserRoadmaps({ roadmaps, onDelete, onView }: UserRoadmapsProps) 
                   </CardDescription>
                 </div>
                 <div className="px-2 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs font-medium">
-                  {roadmap.skillLevel || 'Beginner'}
+                  {roadmap.params.experience || 'Beginner'}
                 </div>
               </div>
             </CardHeader>
@@ -61,11 +61,11 @@ export function UserRoadmaps({ roadmaps, onDelete, onView }: UserRoadmapsProps) 
               <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                 <div className="flex items-center">
                   <Clock className="w-4 h-4 mr-1.5" />
-                  <span>{roadmap.estimatedTime || 'N/A'} hours</span>
+                  <span>{roadmap.params.timeframe || 'N/A'} hours</span>
                 </div>
                 <div className="flex items-center">
                   <TrendingUp className="w-4 h-4 mr-1.5" />
-                  <span>{roadmap.complexity || 'Medium'}</span>
+                  <span>{roadmap.params.experience || 'Medium'}</span>
                 </div>
               </div>
             </CardContent>
