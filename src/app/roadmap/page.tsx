@@ -268,82 +268,82 @@ export default function RoadmapPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-primary-50/30 to-accent-50/30 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-white via-primary-50/30 to-accent-50/30 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800/95 overflow-x-hidden text-base">
       {/* Hero Section with animated background */}
-      <section className="relative min-h-[70vh] overflow-hidden bg-gradient-to-br from-primary-50/20 to-accent-50/20 dark:from-gray-800 dark:to-gray-900">
-        {/* Enhanced Background Elements */}
+      <section className="relative min-h-[65vh] overflow-hidden bg-gradient-to-br from-primary-50/20 to-accent-50/20 dark:from-gray-800/95 dark:to-gray-900/95">
+        {/* Enhanced Background Elements - Reduced size and opacity */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-72 h-72 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob dark:bg-primary/30 dark:opacity-40"></div>
-          <div className="absolute top-40 right-80 w-72 h-72 bg-accent/20 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob animation-delay-2000 dark:bg-accent/30 dark:opacity-40"></div>
-          <div className="absolute -bottom-20 left-20 w-72 h-72 bg-secondary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob animation-delay-4000 dark:bg-secondary/30 dark:opacity-40"></div>
+          <div className="absolute top-20 right-20 w-60 h-60 bg-primary/15 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob dark:bg-primary/20 dark:opacity-30"></div>
+          <div className="absolute top-40 right-80 w-60 h-60 bg-accent/15 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 dark:bg-accent/20 dark:opacity-30"></div>
+          <div className="absolute -bottom-20 left-20 w-60 h-60 bg-secondary/15 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000 dark:bg-secondary/20 dark:opacity-30"></div>
           
-          {/* Floating Elements */}
-          <div className="absolute top-32 left-1/4 w-4 h-4 bg-primary/40 rounded-full opacity-20 animate-float"></div>
-          <div className="absolute top-64 right-1/3 w-6 h-6 bg-accent/40 rounded-full opacity-30 animate-float animation-delay-1000"></div>
-          <div className="absolute bottom-40 left-1/3 w-3 h-3 bg-secondary/40 rounded-full opacity-25 animate-float animation-delay-2000"></div>
+          {/* Smaller, more subtle floating elements */}
+          <div className="absolute top-32 left-1/4 w-3 h-3 bg-primary/30 rounded-full opacity-20 animate-float"></div>
+          <div className="absolute top-64 right-1/3 w-4 h-4 bg-accent/30 rounded-full opacity-25 animate-float animation-delay-1000"></div>
+          <div className="absolute bottom-40 left-1/3 w-2.5 h-2.5 bg-secondary/30 rounded-full opacity-20 animate-float animation-delay-2000"></div>
         </div>
 
         {/* Content */}
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center pt-24 pb-8 min-h-[70vh]">
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center pt-20 pb-6 min-h-[65vh]">
           <motion.div 
-            className="max-w-5xl text-center w-full"
-            initial={{ opacity: 0, y: 30 }}
+            className="w-full max-w-4xl text-center px-2"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
             <motion.div
-              className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 border border-primary/20"
-              initial={{ opacity: 0, scale: 0.8 }}
+              className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-5 border border-primary/20"
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <Rocket className="w-4 h-4 mr-2" />
-              AI-Powered Learning Paths
+              <Rocket className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5" />
+              <span>AI-Powered Roadmap Generator</span>
             </motion.div>
-
+            
             <motion.h1 
-              className="text-5xl md:text-6xl lg:text-7xl font-poppins font-bold leading-tight mb-6"
-              initial={{ opacity: 0, y: 20 }}
+              className="text-3xl sm:text-4xl md:text-5xl font-poppins font-bold text-gray-900 dark:text-white mb-4 sm:mb-5 leading-tight"
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
-                Master
-              </span>{" "}
-              <span className="text-gray-900 dark:text-white">Your Tech Career</span>
+              Your Personalized
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-accent-500 dark:from-primary-400 dark:to-accent-400 block sm:inline">
+                {' '}Learning Journey
+              </span>
             </motion.h1>
-
+            
             <motion.p 
-              className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8"
-              initial={{ opacity: 0, y: 20 }}
+              className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-7 px-2"
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
             >
-              Personalized learning roadmaps to help you land your dream job at top tech companies
+              Get a customized learning path based on your goals, experience level, and time commitment.
             </motion.p>
-
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
+            
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2"
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
             >
               <Button 
+                size="lg" 
+                className="group px-6 sm:px-7 py-4 sm:py-5 text-sm sm:text-base font-medium bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-white shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-200 transform hover:-translate-y-0.5"
                 onClick={handleOpenForm}
-                className="bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 text-white font-semibold px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-base sm:text-lg"
               >
-                <Zap className="w-5 h-5 mr-2" />
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2 group-hover:scale-110 transition-transform" />
                 Generate Your Roadmap
               </Button>
+              
               <Button 
                 variant="outline" 
-                className="border-2 border-gray-800 dark:border-gray-200 text-gray-800 dark:text-gray-200 font-semibold px-8 py-6 rounded-xl hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-all duration-300 hover:scale-105 text-base sm:text-lg"
-                onClick={() => {
-                  const element = document.getElementById('featured-roadmaps');
-                  element?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                size="lg" 
+                className="px-6 sm:px-7 py-4 sm:py-5 text-sm sm:text-base font-medium border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors duration-200"
+                onClick={() => setCurrentView('featured')}
               >
-                <BookOpen className="w-5 h-5 mr-2" />
+                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
                 Browse Roadmaps
               </Button>
             </motion.div>
@@ -488,68 +488,78 @@ export default function RoadmapPage() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
-                  <Card className="h-full flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
-                    <div className="p-6 flex-1 flex flex-col">
+                  <Card className="h-full flex flex-col overflow-hidden hover:shadow-lg transition-all duration-300 group border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                    <div className="p-5 sm:p-6 flex-1 flex flex-col">
                       <div className="flex items-center justify-between mb-4">
-                        <div className="p-2.5 rounded-lg bg-primary-50 dark:bg-primary-900/20">
+                        <div className="p-2.5 rounded-lg bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-300">
                           {roadmap.icon}
                         </div>
-                        <Badge variant="outline" className="text-xs py-1 px-2.5 rounded-full border-primary-200 dark:border-primary-800 text-primary-700 dark:text-primary-300 bg-primary-50/50 dark:bg-primary-900/20">
+                        <Badge 
+                          variant="outline" 
+                          className="text-xs py-1 px-2.5 rounded-full border-primary-200 dark:border-primary-700 text-primary-700 dark:text-primary-300 bg-primary-50/50 dark:bg-primary-900/20"
+                        >
                           {roadmap.duration}
                         </Badge>
                       </div>
-                      <CardTitle className="text-xl font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                      
+                      <CardTitle className="text-lg sm:text-xl font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                         {roadmap.title}
                       </CardTitle>
-                      <CardDescription className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                      
+                      <CardDescription className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
                         {roadmap.description}
                       </CardDescription>
                       
-                      <div className="mt-4 mb-6">
-                        <div className="flex items-center justify-between text-sm mb-2">
+                      <div className="mt-4 mb-5 sm:mb-6">
+                        <div className="flex items-center justify-between text-xs sm:text-sm mb-2">
                           <span className="text-gray-500 dark:text-gray-400">Level</span>
-                          <span className="font-medium text-gray-900 dark:text-white">{roadmap.level}</span>
+                          <span className="font-medium text-gray-900 dark:text-gray-100">{roadmap.level}</span>
                         </div>
-                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
                           <div 
-                            className="bg-gradient-to-r from-primary-500 to-accent-500 h-1.5 rounded-full" 
+                            className="bg-gradient-to-r from-primary-500 to-accent-500 h-full rounded-full transition-all duration-500" 
                             style={{ 
                               width: roadmap.level === 'Beginner' ? '33%' : 
                                      roadmap.level === 'Intermediate' ? '66%' : '100%' 
                             }}
-                          ></div>
+                          />
                         </div>
                       </div>
                       
-                      <div className="mt-auto">
+                      <div className="mt-auto pt-2">
                         <div className="flex flex-wrap gap-2 mb-4">
                           {roadmap.topics.slice(0, 3).map((topic, i) => (
-                            <Badge key={i} variant="secondary" className="text-xs py-1 px-2.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                            <Badge 
+                              key={i} 
+                              variant="secondary" 
+                              className="text-xs py-1 px-2.5 rounded-full bg-gray-100 dark:bg-gray-700/80 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-600"
+                            >
                               {topic}
                             </Badge>
                           ))}
                           {roadmap.topics.length > 3 && (
-                            <Badge variant="outline" className="text-xs py-1 px-2.5 rounded-full">
+                            <Badge 
+                              variant="outline" 
+                              className="text-xs py-1 px-2.5 rounded-full border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300"
+                            >
                               +{roadmap.topics.length - 3} more
                             </Badge>
                           )}
                         </div>
                         
                         <Button 
-                          className="w-full group-hover:bg-primary-600 group-hover:text-white transition-colors"
+                          className="w-full group-hover:bg-primary-600 group-hover:text-white transition-colors border-gray-200 dark:border-gray-600 dark:text-white dark:hover:bg-primary-700 dark:hover:border-primary-600"
                           variant="outline"
                           onClick={() => {
                             if (!authChecked) {
                               requireAuth(user);
                               return;
                             }
-                            // Handle roadmap selection
-                            // For now, just open the form
                             setIsFormOpen(true);
                           }}
                         >
                           Start Learning
-                          <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-all duration-200" />
                         </Button>
                       </div>
                     </div>
