@@ -1,19 +1,13 @@
-import { useState, useEffect } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@/firebase';
+import { useSession } from 'next-auth/react';
 
 export const useAuth = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  return { user, loading };
+  const { data: session, status } = useSession();
+  
+  return {
+    user: session?.user || null,
+    session,
+    loading: status === 'loading',
+    authenticated: status === 'authenticated',
+    unauthenticated: status === 'unauthenticated'
+  };
 };

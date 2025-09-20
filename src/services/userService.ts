@@ -1,102 +1,143 @@
-import { 
-  doc, 
-  getDoc, 
-  setDoc, 
-  updateDoc, 
-  serverTimestamp 
-} from 'firebase/firestore';
-import { 
-  ref, 
-  uploadBytes, 
-  getDownloadURL, 
-  deleteObject 
-} from 'firebase/storage';
-import { db, storage } from '@/lib/firebase';
-import { UserProfile } from '@/types/profile';
+import { connectDB } from '@/lib/mongoose';
+import User from '../../models/User';
 
-export const getUserProfile = async (uid: string): Promise<UserProfile | null> => {
+export interface UserProfile {
+  id: string;
+  name?: string;
+  email: string;
+  image?: string;
+  displayName?: string;
+  credits: number;
+  plan: 'free' | 'premium' | 'enterprise';
+  preferences: {
+    theme: 'light' | 'dark' | 'system';
+    language: string;
+    notifications: {
+      email: boolean;
+      browser: boolean;
+      marketing: boolean;
+    };
+  };
+  profile: {
+    bio?: string;
+    location?: string;
+    website?: string;
+    github?: string;
+    linkedin?: string;
+    twitter?: string;
+    company?: string;
+    jobTitle?: string;
+    skills: string[];
+    experience: 'beginner' | 'intermediate' | 'advanced' | 'expert';
+  };
+  progress: {
+    completedCourses: string[];
+    currentCourse?: string;
+    totalXP: number;
+    streak: number;
+    lastActiveDate?: Date;
+  };
+}
+
+export const getUserProfile = async (userId: string): Promise<UserProfile | null> => {
   try {
-    const userDocRef = doc(db, 'users', uid);
-    const userDoc = await getDoc(userDocRef);
-    
-    if (userDoc.exists()) {
-      const data = userDoc.data();
-      return {
-        uid,
-        ...data,
-        joinedDate: data.joinedDate?.toDate?.()?.toISOString() || data.joinedDate,
-      } as UserProfile;
-    }
-    
-    return null;
+    await connectDB();
+    const user = await User.findById(userId).lean();
+    return user ? { ...user, id: user._id.toString() } : null;
   } catch (error) {
     console.error('Error fetching user profile:', error);
-    throw new Error('Failed to fetch user profile');
+    return null;
+  }
+};
+
+export const getUserByEmail = async (email: string): Promise<UserProfile | null> => {
+  try {
+    await connectDB();
+    const user = await User.findOne({ email }).lean();
+    return user ? { ...user, id: user._id.toString() } : null;
+  } catch (error) {
+    console.error('Error fetching user by email:', error);
+    return null;
   }
 };
 
 export const updateUserProfile = async (
-  uid: string, 
+  userId: string, 
   profileData: Partial<UserProfile>
 ): Promise<boolean> => {
   try {
-    const userDocRef = doc(db, 'users', uid);
-    const userDoc = await getDoc(userDocRef);
-    
-    const updateData = {
-      ...profileData,
-      updatedAt: serverTimestamp(),
-    };
-
-    if (userDoc.exists()) {
-      await updateDoc(userDocRef, updateData);
-    } else {
-      await setDoc(userDocRef, {
-        ...updateData,
-        createdAt: serverTimestamp(),
-        joinedDate: serverTimestamp(),
-      });
-    }
-    
-    return true;
+    await connectDB();
+    const result = await User.findByIdAndUpdate(
+      userId,
+      { ...profileData, updatedAt: new Date() },
+      { new: true, runValidators: true }
+    );
+    return !!result;
   } catch (error) {
     console.error('Error updating user profile:', error);
     return false;
   }
 };
 
-export const uploadUserPhoto = async (uid: string, file: File): Promise<string> => {
+export const createUserProfile = async (userData: Partial<UserProfile>): Promise<UserProfile | null> => {
   try {
-    // Create a reference to the file location
-    const photoRef = ref(storage, `users/${uid}/profile-photo`);
-    
-    // Upload the file
-    const snapshot = await uploadBytes(photoRef, file);
-    
-    // Get the download URL
-    const downloadURL = await getDownloadURL(snapshot.ref);
-    
-    // Update the user's profile with the new photo URL
-    await updateUserProfile(uid, { photoURL: downloadURL, profilePic: downloadURL });
-    
-    return downloadURL;
+    await connectDB();
+    const user = new User(userData);
+    const savedUser = await user.save();
+    return { ...savedUser.toObject(), id: savedUser._id.toString() };
   } catch (error) {
-    console.error('Error uploading user photo:', error);
-    throw new Error('Failed to upload photo');
+    console.error('Error creating user profile:', error);
+    return null;
   }
 };
 
-export const deleteUserPhoto = async (uid: string): Promise<boolean> => {
+export const updateUserCredits = async (userId: string, credits: number): Promise<boolean> => {
   try {
-    const photoRef = ref(storage, `users/${uid}/profile-photo`);
-    await deleteObject(photoRef);
-    
-    // Remove photo URL from user profile
-    await updateUserProfile(uid, { photoURL: '', profilePic: '' });
-    
+    await connectDB();
+    const result = await User.findByIdAndUpdate(
+      userId,
+      { credits, updatedAt: new Date() },
+      { new: true }
+    );
+    return !!result;
+  } catch (error) {
+    console.error('Error updating user credits:', error);
+    return false;
+  }
+};
+
+export const updateUserProgress = async (userId: string, progressData: Partial<UserProfile['progress']>): Promise<boolean> => {
+  try {
+    await connectDB();
+    const result = await User.findByIdAndUpdate(
+      userId,
+      { 
+        progress: progressData,
+        updatedAt: new Date() 
+      },
+      { new: true }
+    );
+    return !!result;
+  } catch (error) {
+    console.error('Error updating user progress:', error);
+    return false;
+  }
+};
+
+// Note: Photo upload functionality will need to be implemented with a different service
+// like AWS S3, Cloudinary, or similar since we're removing Firebase Storage
+export const uploadUserPhoto = async (userId: string, file: File): Promise<string> => {
+  // TODO: Implement with your preferred file storage solution
+  throw new Error('Photo upload needs to be implemented with a file storage service');
+};
+
+export const deleteUserPhoto = async (userId: string): Promise<boolean> => {
+  // TODO: Implement with your preferred file storage solution
+  try {
+    await updateUserProfile(userId, { image: '' });
     return true;
   } catch (error) {
-    console.error('Error deleting user photo:', error);
+    console.error('Error removing user photo URL:', error);
     return false;
   }
 };

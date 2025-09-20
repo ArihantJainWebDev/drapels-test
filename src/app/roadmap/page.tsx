@@ -340,7 +340,7 @@ export default function RoadmapPage() {
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="px-6 sm:px-7 py-4 sm:py-5 text-sm sm:text-base font-medium border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors duration-200"
+                className="px-6 sm:px-7 py-4 sm:py-5 text-sm sm:text-base font-medium border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800/50 transition-colors duration-200"
                 onClick={() => setCurrentView('featured')}
               >
                 <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
@@ -769,7 +769,7 @@ export default function RoadmapPage() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-gray-800 dark:border-gray-200 text-gray-800 dark:text-gray-200 font-semibold px-8 py-6 rounded-xl hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-all duration-300 hover:scale-105 text-base sm:text-lg"
+                className="border-2 border-gray-800 dark:border-gray-200 text-gray-800 dark:text-gray-200 font-semibold px-8 py-6 rounded-xl dark:hover:bg-gray-800/50 transition-all duration-300 hover:scale-105 text-base sm:text-lg"
                 onClick={() => {
                   const element = document.getElementById('featured-roadmaps');
                   element?.scrollIntoView({ behavior: 'smooth' });

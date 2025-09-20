@@ -1,18 +1,6 @@
-import { Roadmap } from "@/types/roadmap";
-import { doc, getDoc, setDoc, deleteDoc, collection, getDocs } from 'firebase/firestore';
-import { db } from '../lib/firebase'; // Update Firebase import path
-import { getAuth } from 'firebase/auth';
+import { createRoadmap, getUserRoadmaps as fetchUserRoadmaps, RoadmapData } from './roadmapService';
 import { toast } from '@/components/ui/use-toast';
-
-const waitForAuth = async () => {
-  const auth = getAuth();
-  return new Promise((resolve) => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      unsubscribe();
-      resolve(user);
-    });
-  });
-};
+import { useSession } from 'next-auth/react';
 
 function parseRoadmapJSON(raw: string) {
   if (!raw || typeof raw !== 'string') throw new Error('Empty AI response');
@@ -32,7 +20,7 @@ function parseRoadmapJSON(raw: string) {
   }
 }
 
-export const generateRoadmap = async (params: any): Promise<Roadmap> => {
+export const generateRoadmap = async (params: any, userId: string): Promise<RoadmapData | null> => {
   const prompt = `Generate a comprehensive learning roadmap for a ${params.role} role at ${params.company} in the domain of ${params.domain}. 
   
 Experience level: ${params.experience}
@@ -118,11 +106,7 @@ Important:
       throw new Error('No topics generated in roadmap');
     }
 
-    await waitForAuth();
-    const auth = getAuth();
-    const user = auth.currentUser;
-    
-    if (!user) {
+    if (!userId) {
       const error = 'User not authenticated. Please log in to save your roadmap.';
       toast.show({
         variant: "destructive",
@@ -132,28 +116,39 @@ Important:
       throw new Error(error);
     }
 
-    const roadmap: Roadmap = {
-      id: `roadmap-${Date.now()}`,
+    // Convert topics to steps format for MongoDB
+    const steps = roadmapData.topics?.flatMap((topic: any, topicIndex: number) => 
+      (topic.subtopics || []).map((subtopic: any, subtopicIndex: number) => ({
+        id: `step-${topicIndex}-${subtopicIndex}`,
+        title: subtopic.title,
+        description: subtopic.description,
+        resources: subtopic.resources || [],
+        completed: false,
+        estimatedTime: subtopic.estimatedHours ? `${subtopic.estimatedHours} hours` : '2 hours'
+      }))
+    ) || [];
+
+    const roadmapPayload: Omit<RoadmapData, 'id'> = {
+      userId,
       title: roadmapData.title,
       description: roadmapData.description,
-      params: params,
-      topics: roadmapData.topics.map((topic: any) => ({
-        ...topic,
-        completed: false,
-        progress: 0,
-        subtopics: (topic.subtopics || []).map((subtopic: any) => ({
-          ...subtopic,
-          completed: false
-        }))
-      })),
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      overallProgress: 0,
-      userId: user.uid
+      category: params.domain || 'General',
+      difficulty: params.experience === 'beginner' ? 'beginner' : 
+                  params.experience === 'advanced' ? 'advanced' : 'intermediate',
+      estimatedDuration: params.timeframe || '3 months',
+      technologies: params.focusAreas || [],
+      steps,
+      progress: {
+        completedSteps: 0,
+        totalSteps: steps.length,
+        percentage: 0
+      },
+      isPublic: false,
+      tags: params.currentSkills || [],
+      status: 'active'
     };
 
-    const roadmapRef = doc(db, 'users', user.uid, 'roadmaps', roadmap.id);
-    await setDoc(roadmapRef, roadmap);
+    const roadmap = await createRoadmap(roadmapPayload);
     
     return roadmap;
   } catch (error: any) {
@@ -171,17 +166,8 @@ Important:
   }
 };
 
-export const getUserRoadmaps = async (): Promise<Roadmap[]> => {
-  const auth = getAuth();
-  await new Promise((resolve) => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      unsubscribe();
-      resolve(user);
-    });
-  });
-
-  const user = auth.currentUser;
-  if (!user) {
+export const getUserRoadmaps = async (userId: string): Promise<RoadmapData[]> => {
+  if (!userId) {
     const error = 'User not authenticated. Please log in to view your roadmaps.';
     toast.show({
       variant: "destructive",
@@ -192,12 +178,9 @@ export const getUserRoadmaps = async (): Promise<Roadmap[]> => {
   }
 
   try {
-    const roadmapsRef = collection(db, 'users', user.uid, 'roadmaps');
-    const snapshot = await getDocs(roadmapsRef);
-    return snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as Roadmap));
+    return await fetchUserRoadmaps(userId);
   } catch (error: any) {
     toast.show({
-      variant: "destructive",
       title: "Failed to Load Roadmaps",
       description: error.message,
     });
@@ -205,113 +188,18 @@ export const getUserRoadmaps = async (): Promise<Roadmap[]> => {
   }
 };
 
-export const deleteRoadmap = async (roadmapId: string): Promise<boolean> => {
-  try {
-    await waitForAuth();
-    const auth = getAuth();
-    const user = auth.currentUser;
+// This function is now handled by the roadmapService
+export { deleteRoadmap } from './roadmapService';
 
-    if (!user) {
-      const error = 'User not authenticated. Please log in to delete roadmaps.';
-      toast.show({
-        variant: "destructive",
-        title: "Authentication Error",
-        description: error,
-      });
-      throw new Error(error);
-    }
+// This function is now handled by the roadmapService
+export { updateStepCompletion as updateTopicProgress } from './roadmapService';
 
-    if (!roadmapId) {
-      throw new Error('Invalid roadmap ID');
-    }
-
-    const roadmapRef = doc(db, 'users', user.uid, 'roadmaps', roadmapId);
-    await deleteDoc(roadmapRef);
-    return true;
-  } catch (error: any) {
-    console.error('Error in deleteRoadmap:', error);
-    const errorMessage = `Failed to delete roadmap: ${error.message}`;
-    toast.show({
-      variant: "destructive",
-      title: "Delete Failed",
-      description: errorMessage,
-    });
-    throw new Error(errorMessage);
-  }
-};
-
-export const updateTopicProgress = async (
+// Helper function to update step completion with proper mapping
+export const updateStepProgress = async (
   roadmapId: string,
-  topicId: string,
-  subtopicId: string | null,
+  stepId: string,
   completed: boolean
-): Promise<Roadmap | null> => {
-  const auth = getAuth();
-  await new Promise((resolve) => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      unsubscribe();
-      resolve(user);
-    });
-  });
-  
-  const user = auth.currentUser;
-  if (!user) {
-    const error = 'User not authenticated. Please log in to update your progress.';
-    toast.show({
-      variant: "destructive",
-      title: "Authentication Error",
-      description: error,
-    });
-    throw new Error(error);
-  }
-
-  const roadmapRef = doc(db, 'users', user.uid, 'roadmaps', roadmapId);
-  const roadmapDoc = await getDoc(roadmapRef);
-  
-  if (!roadmapDoc.exists()) {
-    const error = 'Roadmap not found';
-    toast.show({
-      variant: "destructive",
-      title: "Update Failed",
-      description: error,
-    });
-    throw new Error(error);
-  }
-
-  const roadmap = roadmapDoc.data() as Roadmap;
-  const topic = roadmap.topics.find(t => t.id === topicId);
-  
-  if (!topic) {
-    throw new Error('Topic not found');
-  }
-
-  if (subtopicId) {
-    const subtopic = topic.subtopics.find(s => s.id === subtopicId);
-    if (subtopic) {
-      subtopic.completed = completed;
-    }
-  } else {
-    topic.completed = completed;
-    if (Array.isArray(topic.subtopics)) {
-      topic.subtopics = topic.subtopics.map(subtopic => ({
-        ...subtopic,
-        completed: completed
-      }));
-    }
-  }
-
-  roadmap.topics.forEach(topic => {
-    const completedSubtopics = topic.subtopics.filter(s => s.completed).length;
-    topic.progress = topic.subtopics.length > 0 ?
-      Math.round((completedSubtopics / topic.subtopics.length) * 100) : 0;
-    topic.completed = topic.progress === 100;
-  });
-
-  const completedTopics = roadmap.topics.filter(t => t.completed).length;
-  roadmap.overallProgress = roadmap.topics.length > 0 ?
-    Math.round((completedTopics / roadmap.topics.length) * 100) : 0;
-  roadmap.updatedAt = new Date().toISOString();
-  
-  await setDoc(roadmapRef, roadmap);
-  return roadmap;
+): Promise<boolean> => {
+  const { updateStepCompletion } = await import('./roadmapService');
+  return await updateStepCompletion(roadmapId, stepId, completed);
 };

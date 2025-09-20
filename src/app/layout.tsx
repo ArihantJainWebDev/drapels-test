@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { SpotlightProvider } from "@/context/SpotlightContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { SessionProvider } from "next-auth/react";
 import { CursorProvider } from "@/context/CursorContext";
 import { CreditsDialogProvider } from "@/components/credits/CreditsDialogProvider";
 import {
@@ -44,30 +45,32 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden">
       <body className={`${inter.variable} font-sans antialiased relative`}>
-        <LanguageProvider>
-          <ThemeProvider>
-            <SpotlightProvider>
-              <AuthProvider>
-                <CursorProvider>
-                  <CreditsDialogProvider>
-                    <ResponsiveLayoutProvider>
-                      <Header />
-                      <div className="relative z-0">
-                        {children}
-                      </div>
-                      <Footer />
-                      <CookieBanner />
-                      <ScrollToTop />
-                      <ElasticCursor />
-                      <FireCursor />
-                      <SpotlightCursor />
-                    </ResponsiveLayoutProvider>
-                  </CreditsDialogProvider>
-                </CursorProvider>
-              </AuthProvider>
-            </SpotlightProvider>
-          </ThemeProvider>
-        </LanguageProvider>
+        <SessionProvider>
+          <LanguageProvider>
+            <ThemeProvider>
+              <SpotlightProvider>
+                <AuthProvider>
+                  <CursorProvider>
+                    <CreditsDialogProvider>
+                      <ResponsiveLayoutProvider>
+                        <Header />
+                        <div className="relative z-0">
+                          {children}
+                        </div>
+                        <Footer />
+                        <CookieBanner />
+                        <ScrollToTop />
+                        <ElasticCursor />
+                        <FireCursor />
+                        <SpotlightCursor />
+                      </ResponsiveLayoutProvider>
+                    </CreditsDialogProvider>
+                  </CursorProvider>
+                </AuthProvider>
+              </SpotlightProvider>
+            </ThemeProvider>
+          </LanguageProvider>
+        </SessionProvider>
       </body>
     </html>
   );
