@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import MobileMenu from './header/mobile/MobileMenu';
+import MobileMenuTrigger from './header/mobile/MobileMenuTrigger';
 import { 
   Search, 
   Sun, 
@@ -28,7 +30,30 @@ const Navbar = () => {
   const { user, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuReady, setIsMenuReady] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const pathname = usePathname();
+  const isHome = pathname === '/';
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Close menu when route changes
+  React.useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
+  // Handle scroll for header effects
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Set menu ready after initial render to prevent hydration issues
+  React.useEffect(() => {
+    setIsMenuReady(true);
+  }, []);
 
   const navigationTabs = [
     { name: 'Home', href: '/', icon: Home },
@@ -162,14 +187,16 @@ const Navbar = () => {
             )}
 
             {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="sm"
+            <MobileMenuTrigger
+              isHome={isHome}
+              isScrolled={isScrolled}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 text-gray-600 dark:text-gray-300"
-            >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </Button>
+            />
+            <MobileMenu
+              isOpen={isMenuOpen}
+              menuReady={isMenuReady}
+              onClose={() => setIsMenuOpen(false)}
+            />
           </div>
         </div>
 

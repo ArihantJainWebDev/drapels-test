@@ -20,16 +20,24 @@ interface DynamicMenuGeneratorProps {
   className?: string;
   showCategories?: boolean;
   maxItemsPerCategory?: number;
+  onLinkClick?: () => void;
 }
 
 export const DynamicMenuGenerator: React.FC<DynamicMenuGeneratorProps> = ({
   variant = 'header',
   className,
   showCategories = true,
-  maxItemsPerCategory = 6
+  maxItemsPerCategory = 6,
+  onLinkClick
 }) => {
   const { user } = useAuth();
   const pathname = usePathname();
+  
+  // Debug: Log when component renders and the current variant
+  React.useEffect(() => {
+    console.log('DynamicMenuGenerator mounted with variant:', variant);
+    console.log('Current pathname:', pathname);
+  }, [variant, pathname]);
 
   const filteredNavigation = useMemo(() => {
     const filterItems = (items: NavigationItem[]): NavigationItem[] => {
@@ -187,90 +195,112 @@ export const DynamicMenuGenerator: React.FC<DynamicMenuGeneratorProps> = ({
     </div>
   );
 
-  const renderMobileMenu = () => (
-    <div className={cn('space-y-4 p-4', className)}>
-      <div className="space-y-2">
-        <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-          Main Navigation
-        </h3>
-        {filteredNavigation.primary.map((item, index) => {
-          const IconComponent = item.icon;
-          const active = isActive(item.href);
-          
-          return (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.3 }}
-            >
-              <a
-                href={item.href}
-                className={cn(
-                  'flex items-center gap-3 p-3 rounded-lg transition-all duration-200',
-                  active
-                    ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400'
-                    : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800/50'
-                )}
-              >
-                {IconComponent && (
-                  <IconComponent className={cn(
-                    'w-5 h-5',
-                    active ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'
-                  )} />
-                )}
-                <div className="flex-1">
-                  <div className="font-medium">{item.label}</div>
-                  {item.description && (
-                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      {item.description}
-                    </div>
-                  )}
-                </div>
-                {(item.isNew || item.isPopular) && (
-                  <div className={cn(
-                    'px-2 py-1 rounded-full text-xs font-medium',
-                    item.isNew 
-                      ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                      : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
-                  )}>
-                    {item.isNew ? 'New' : 'Popular'}
-                  </div>
-                )}
-              </a>
-            </motion.div>
-          );
-        })}
+  const renderMobileMenu = () => {
+    const handleLinkClick = () => {
+      if (onLinkClick) onLinkClick();
+    };
+    console.log('Rendering mobile menu with items:', {
+      primary: filteredNavigation.primary,
+      tools: filteredNavigation.tools,
+      career: filteredNavigation.career,
+      company: filteredNavigation.company
+    });
+
+    return (
+      <div className={cn('w-full', className)}>
+        {/* Primary Navigation */}
+        {filteredNavigation.primary.length > 0 && (
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-4 mb-2">
+              Main Navigation
+            </h3>
+            <div className="space-y-1">
+              {filteredNavigation.primary.map((item, index) => {
+                const IconComponent = item.icon;
+                const active = isActive(item.href);
+                
+                return (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05, duration: 0.2 }}
+                  >
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200',
+                        active
+                          ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400'
+                          : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800/50'
+                      )}
+                      onClick={handleLinkClick}
+                    >
+                      {IconComponent && (
+                        <IconComponent className={cn(
+                          'w-5 h-5 flex-shrink-0',
+                          active ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'
+                        )} />
+                      )}
+                      <span className="text-sm font-medium">{item.label}</span>
+                      {(item.isNew || item.isPopular) && (
+                        <span className={cn(
+                          'ml-auto px-2 py-0.5 rounded-full text-xs font-medium',
+                          item.isNew 
+                            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                            : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+                        )}>
+                          {item.isNew ? 'New' : 'Popular'}
+                        </span>
+                      )}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Tools Navigation */}
+        {filteredNavigation.tools.length > 0 && (
+          <ProgressiveDisclosure
+            items={filteredNavigation.tools}
+            title="Developer Tools"
+            variant="compact"
+            defaultExpanded={false}
+            className="mb-4"
+          />
+        )}
+
+        {/* Career Navigation */}
+        {filteredNavigation.career.length > 0 && (
+          <ProgressiveDisclosure
+            items={filteredNavigation.career}
+            title="Career Development"
+            variant="compact"
+            defaultExpanded={false}
+            className="mb-4"
+          />
+        )}
+
+        {/* Company Navigation */}
+        {filteredNavigation.company.length > 0 && (
+          <ProgressiveDisclosure
+            items={filteredNavigation.company}
+            title="Company & Support"
+            variant="compact"
+            defaultExpanded={false}
+          />
+        )}
       </div>
-
-      <ProgressiveDisclosure
-        items={filteredNavigation.tools}
-        title="Developer Tools"
-        variant="compact"
-        defaultExpanded={false}
-      />
-
-      <ProgressiveDisclosure
-        items={filteredNavigation.career}
-        title="Career Development"
-        variant="compact"
-        defaultExpanded={false}
-      />
-
-      <ProgressiveDisclosure
-        items={filteredNavigation.company}
-        title="Company & Support"
-        variant="compact"
-        defaultExpanded={false}
-      />
-    </div>
-  );
+    );
+  };
 
   const renderFooterMenu = () => (
-    <div className={cn('grid grid-cols-2 md:grid-cols-4 gap-8', className)}>
+    <div className={cn('grid grid-cols-1 md:grid-cols-4 gap-8', className)}>
       <div>
         <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">
-          Platform
+          Product
         </h3>
         <ul className="space-y-2">
           {filteredNavigation.primary.map(item => (
@@ -288,10 +318,10 @@ export const DynamicMenuGenerator: React.FC<DynamicMenuGeneratorProps> = ({
 
       <div>
         <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">
-          Developer Tools
+          Tools
         </h3>
         <ul className="space-y-2">
-          {filteredNavigation.tools.slice(0, 5).map(item => (
+          {filteredNavigation.tools.map(item => (
             <li key={item.id}>
               <a
                 href={item.href}

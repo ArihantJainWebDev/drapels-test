@@ -352,3 +352,45 @@ export const getCompanyNavigation = (): NavigationItem[] => {
   const companyItem = navigationConfig.find(item => item.id === 'company');
   return companyItem?.children || [];
 };
+
+export const getResourcesNavigation = (): NavigationItem[] => {
+  const resourcesItem = navigationConfig.find(item => item.id === 'resources');
+  return resourcesItem?.children || [];
+};
+
+export const getHelpNavigation = (): NavigationItem[] => {
+  return [
+    {
+      id: 'help-center',
+      label: 'Help Center',
+      href: '/help',
+      icon: HelpCircle,
+      description: 'Find answers to common questions',
+      seoTitle: 'Help Center - Get Support'
+    },
+    {
+      id: 'documentation',
+      label: 'Documentation',
+      href: '/docs',
+      icon: FileText,
+      description: 'Detailed guides and API references',
+      seoTitle: 'Documentation - Developer Guides'
+    },
+    {
+      id: 'contact-support',
+      label: 'Contact Support',
+      href: '/contact',
+      icon: Mail,
+      description: 'Get in touch with our support team',
+      seoTitle: 'Contact Support - Get Help'
+    },
+    {
+      id: 'faqs',
+      label: 'FAQs',
+      href: '/faq',
+      icon: HelpCircle,
+      description: 'Frequently asked questions',
+      seoTitle: 'FAQs - Frequently Asked Questions'
+    }
+  ];
+};
