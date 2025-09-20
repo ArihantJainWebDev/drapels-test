@@ -1,4 +1,5 @@
 "use client"
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import { User, LogOut, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
@@ -11,7 +12,8 @@ interface MobileMenuContentProps {
   menuReady: boolean;
 }
 
-const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose, menuReady }) => {
+// Memoize the component to prevent unnecessary re-renders
+const MobileMenuContent: React.FC<MobileMenuContentProps> = memo(({ onClose, menuReady }) => {
   const { 
     isAuthenticated, 
     user, 
@@ -37,13 +39,12 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose, menuRead
     navigateToLogin();
   };
 
-  if (!menuReady) {
-    return null;
-  }
+  // Early return if menu is not ready
+  if (!menuReady) return null;
 
   return (
     <>
-      <div className="flex-1 overflow-y-auto custom-scrollbar">
+      <div className="flex-1 overflow-y-auto custom-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
         <DynamicMenuGenerator
           variant="mobile"
           className="p-0"
@@ -185,6 +186,6 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({ onClose, menuRead
       </motion.div>
     </>
   );
-};
+});
 
-export default MobileMenuContent;
+export default MobileMenuContent

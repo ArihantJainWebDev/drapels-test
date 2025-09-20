@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -26,6 +26,28 @@ interface CommunitySectionProps {
 }
 
 const CommunitySection = ({ user, t }: CommunitySectionProps) => {
+  const [isClient, setIsClient] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(1024); // Default to desktop size
+
+  useEffect(() => {
+    // This code will only run on the client side
+    setIsClient(true);
+    
+    // Set initial width
+    setWindowWidth(window.innerWidth);
+    
+    // Handle window resize
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('discussions');
 
@@ -269,7 +291,7 @@ const CommunitySection = ({ user, t }: CommunitySectionProps) => {
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-1">
-                  {discussion.tags.slice(0, window.innerWidth < 640 ? 1 : 2).map((tag, tagIndex) => (
+                  {discussion.tags.slice(0, isClient && windowWidth < 640 ? 1 : 2).map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
                       className="px-1.5 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 text-xs rounded-full"

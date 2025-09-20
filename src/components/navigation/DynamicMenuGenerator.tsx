@@ -4,13 +4,13 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Code } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { 
-  navigationConfig, 
-  NavigationItem, 
-  getPrimaryNavigation, 
-  getToolsNavigation, 
-  getCareerNavigation, 
-  getCompanyNavigation 
+import {
+  navigationConfig,
+  NavigationItem,
+  getPrimaryNavigation,
+  getToolsNavigation,
+  getCareerNavigation,
+  getCompanyNavigation
 } from '@/config/navigation';
 import ProgressiveDisclosure from './ProgressiveDisclosure';
 import { cn } from '@/lib/utils';
@@ -32,7 +32,7 @@ export const DynamicMenuGenerator: React.FC<DynamicMenuGeneratorProps> = ({
 }) => {
   const { user } = useAuth();
   const pathname = usePathname();
-  
+
   // Debug: Log when component renders and the current variant
   React.useEffect(() => {
     console.log('DynamicMenuGenerator mounted with variant:', variant);
@@ -81,7 +81,7 @@ export const DynamicMenuGenerator: React.FC<DynamicMenuGeneratorProps> = ({
         {filteredNavigation.primary.map((item, index) => {
           const IconComponent = item.icon;
           const active = isActive(item.href);
-          
+
           return (
             <motion.div
               key={item.id}
@@ -115,7 +115,7 @@ export const DynamicMenuGenerator: React.FC<DynamicMenuGeneratorProps> = ({
                 {!active && (
                   <motion.div
                     className="absolute inset-0 rounded-xl bg-gray-100/0 dark:bg-gray-800/0 -z-10"
-                    whileHover={{ 
+                    whileHover={{
                       backgroundColor: ["rgba(0,0,0,0)", "rgba(107,114,128,0.1)", "rgba(0,0,0,0)"],
                       scale: [1, 1.02, 1]
                     }}
@@ -198,100 +198,131 @@ export const DynamicMenuGenerator: React.FC<DynamicMenuGeneratorProps> = ({
   const renderMobileMenu = () => {
     const handleLinkClick = () => {
       if (onLinkClick) onLinkClick();
+
+      // Close mobile menu when a link is clicked
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) {
+        mobileMenu.classList.remove('translate-x-0');
+        mobileMenu.classList.add('-translate-x-full');
+      }
     };
-    console.log('Rendering mobile menu with items:', {
-      primary: filteredNavigation.primary,
-      tools: filteredNavigation.tools,
-      career: filteredNavigation.career,
-      company: filteredNavigation.company
-    });
+
+    // Group navigation items by category
+    const navigationGroups = {
+      primary: filteredNavigation.primary.filter(item => !('hidden' in item) || !item.hidden),
+      tools: filteredNavigation.tools.filter(item => !('hidden' in item) || !item.hidden),
+      career: filteredNavigation.career.filter(item => !('hidden' in item) || !item.hidden),
+      company: filteredNavigation.company.filter(item => !('hidden' in item) || !item.hidden)
+    };
+
+    const categoryTitles = {
+      primary: 'Quick Links',
+      tools: 'Dev Tools',
+      career: 'Career',
+      company: 'Company'
+    };
+
+    const renderIconItem = (item: NavigationItem, index: number) => {
+      const IconComponent = item.icon || Code;
+      const active = isActive(item.href);
+      const labelWords = item.label.split(' ');
+      const displayLabel = labelWords.length > 2 
+        ? labelWords.map(word => word[0]).join('') 
+        : item.label;
+
+      return (
+        <motion.div
+          key={`${item.id}-${index}`}
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ 
+            delay: 0.02 * index, 
+            duration: 0.15, 
+            ease: "easeOut" 
+          }}
+          className="relative group flex-shrink-0 flex flex-col w-1/3 px-1.5"
+        >
+          <Link
+            href={item.href}
+            onClick={handleLinkClick}
+            className={cn(
+              'flex flex-col items-center justify-center w-full h-full py-3 px-1 rounded-xl',
+              'transition-all duration-150',
+              'hover:bg-indigo-50 dark:hover:bg-gray-800/60',
+              active ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-700 dark:text-gray-300',
+              'relative overflow-visible',
+              'flex-grow',
+            )}
+            aria-label={item.label}
+            title={item.label}
+          >
+            <div className={cn(
+              'w-10 h-10 rounded-xl flex items-center justify-center mx-auto',
+              'transition-colors duration-150',
+              active 
+                ? 'bg-indigo-100 dark:bg-indigo-900/40' 
+                : 'bg-gray-100/80 dark:bg-gray-800/40',
+              'group-hover:bg-indigo-100/80 dark:group-hover:bg-indigo-900/30',
+              'shadow-sm flex-shrink-0',
+              'border border-gray-200/50 dark:border-gray-700/50' // Add subtle border
+            )}>
+              <IconComponent 
+                className={cn(
+                  'w-4 h-4',
+                  active 
+                    ? 'text-indigo-600 dark:text-indigo-400' 
+                    : 'text-gray-600/90 dark:text-gray-400/90',
+                  'transition-colors duration-150',
+                  'group-hover:text-indigo-600 dark:group-hover:text-indigo-400',
+                  'flex-shrink-0'
+                )} 
+                aria-hidden="true" 
+              />
+            </div>
+            <span className="text-[10px] font-medium leading-tight text-center px-0.5 line-clamp-2 h-8 flex items-center justify-center w-full">
+              {displayLabel}
+            </span>
+            
+            {active && (
+              <motion.span 
+                className="absolute bottom-3 h-0.5 w-1/3 bg-indigo-600 dark:bg-indigo-400 rounded-full"
+                layoutId="activeIndicator"
+                initial={false}
+                transition={{
+                  type: "spring",
+                  stiffness: 500,
+                  damping: 30
+                }}
+              />
+            )}
+          </Link>
+        </motion.div>
+      );
+    };
+
+    const renderCategory = (category: keyof typeof navigationGroups, index: number) => {
+      const items = navigationGroups[category];
+      if (!items.length) return null;
+
+      return (
+        <div key={category} className="mb-3 last:mb-0">
+          <h3 className="px-2 mb-2 text-[11px] font-semibold text-gray-500/90 dark:text-gray-400/90 uppercase tracking-wider">
+            {categoryTitles[category]}
+          </h3>
+          <div className="flex flex-wrap -mx-1.5 w-full">
+            {items.map((item, itemIndex) => renderIconItem(item, itemIndex))}
+          </div>
+        </div>
+      );
+    };
 
     return (
-      <div className={cn('w-full', className)}>
-        {/* Primary Navigation */}
-        {filteredNavigation.primary.length > 0 && (
-          <div className="mb-6">
-            <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-4 mb-2">
-              Main Navigation
-            </h3>
-            <div className="space-y-1">
-              {filteredNavigation.primary.map((item, index) => {
-                const IconComponent = item.icon;
-                const active = isActive(item.href);
-                
-                return (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.2 }}
-                  >
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200',
-                        active
-                          ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400'
-                          : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800/50'
-                      )}
-                      onClick={handleLinkClick}
-                    >
-                      {IconComponent && (
-                        <IconComponent className={cn(
-                          'w-5 h-5 flex-shrink-0',
-                          active ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'
-                        )} />
-                      )}
-                      <span className="text-sm font-medium">{item.label}</span>
-                      {(item.isNew || item.isPopular) && (
-                        <span className={cn(
-                          'ml-auto px-2 py-0.5 rounded-full text-xs font-medium',
-                          item.isNew 
-                            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                            : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
-                        )}>
-                          {item.isNew ? 'New' : 'Popular'}
-                        </span>
-                      )}
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Tools Navigation */}
-        {filteredNavigation.tools.length > 0 && (
-          <ProgressiveDisclosure
-            items={filteredNavigation.tools}
-            title="Developer Tools"
-            variant="compact"
-            defaultExpanded={false}
-            className="mb-4"
-          />
-        )}
-
-        {/* Career Navigation */}
-        {filteredNavigation.career.length > 0 && (
-          <ProgressiveDisclosure
-            items={filteredNavigation.career}
-            title="Career Development"
-            variant="compact"
-            defaultExpanded={false}
-            className="mb-4"
-          />
-        )}
-
-        {/* Company Navigation */}
-        {filteredNavigation.company.length > 0 && (
-          <ProgressiveDisclosure
-            items={filteredNavigation.company}
-            title="Company & Support"
-            variant="compact"
-            defaultExpanded={false}
-          />
-        )}
+      <div className={cn('w-full h-full overflow-y-auto pb-20', className)}>
+        <nav className="py-3 space-y-5 w-full px-3" role="navigation" aria-label="Mobile icon navigation">
+          {Object.keys(navigationGroups).map((category, index) => 
+            renderCategory(category as keyof typeof navigationGroups, index)
+          )}
+        </nav>
       </div>
     );
   };

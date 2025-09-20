@@ -26,32 +26,33 @@ const Header: React.FC = () => {
       className={headerClasses}
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ 
-        duration: 0.4, 
-        ease: "easeOut" 
+      transition={{
+        duration: 0.4,
+        ease: "easeOut"
       }}
       role="banner"
     >
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
         <HeaderLogo isHome={isHome} isScrolled={isScrolled} />
         <DesktopNavigation isHome={isHome} isScrolled={isScrolled} />
         <HeaderActions isHome={isHome} isScrolled={isScrolled} variant="desktop" />
-        
+
         {/* Mobile Actions and Menu Trigger */}
         <div className="lg:hidden flex items-center gap-3">
           <HeaderActions isHome={isHome} isScrolled={isScrolled} variant="mobile" />
-          <MobileMenuTrigger 
-            isHome={isHome} 
-            isScrolled={isScrolled} 
-            onClick={() => setIsMobileMenuOpen(true)} 
+          <MobileMenuTrigger
+            isHome={isHome}
+            isScrolled={isScrolled}
+            isMenuOpen={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen(true)}
           />
         </div>
 
-        <MobileMenu 
-          isOpen={isMobileMenuOpen} 
-          menuReady={menuReady} 
-          onClose={closeMobileMenu} 
+        <MobileMenu
+          isOpen={isMobileMenuOpen}
+          menuReady={menuReady}
+          onClose={closeMobileMenu}
         />
       </div>
 

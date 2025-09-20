@@ -1,4 +1,5 @@
 "use client"
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,70 +13,90 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, menuReady, onClose }) => {
+  // Add/remove class to body when menu opens/closes
+  React.useEffect(() => {
+    if (isOpen) {
+      document.documentElement.classList.add('menu-open');
+    } else {
+      document.documentElement.classList.remove('menu-open');
+    }
+    
+    return () => {
+      document.documentElement.classList.remove('menu-open');
+    };
+  }, [isOpen]);
+
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop - Simplified with CSS transitions */}
           <motion.div
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.15, ease: 'easeInOut' }}
             onClick={onClose}
+            key="backdrop"
           />
 
-          {/* Mobile Menu Panel */}
+          {/* Mobile Menu Panel - Optimized */}
           <motion.div
-            className="fixed top-0 right-0 h-screen w-72 max-w-[85vw] bg-white/95 dark:bg-gray-900/95 shadow-2xl z-50 flex flex-col border-l border-gray-200/30 dark:border-gray-800/30 will-change-transform transform-gpu"
+            className="fixed top-0 right-0 h-screen w-72 max-w-[85vw] bg-white/95 dark:bg-gray-900/95 shadow-2xl z-50 flex flex-col border-l border-gray-200/30 dark:border-gray-800/30"
             style={{
-              WebkitTextSizeAdjust: '100%',
-              WebkitFontSmoothing: 'antialiased',
-              textRendering: 'optimizeLegibility',
-              touchAction: 'pan-y',
-              WebkitUserSelect: 'none',
-              userSelect: 'none',
-              WebkitTapHighlightColor: 'transparent',
-              WebkitTouchCallout: 'none',
-              overscrollBehavior: 'contain',
-              position: 'fixed',
-              maxHeight: '100vh',
-              overflowY: 'auto',
-              WebkitOverflowScrolling: 'touch'
+              // Performance optimizations
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden',
+              perspective: 1000,
+              willChange: 'transform, opacity',
+              // Scroll handling
+              overflowY: 'auto'
             }}
             initial={{ x: '100%', opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: '100%', opacity: 0 }}
-            transition={{
-              type: 'spring',
-              damping: headerConfig.animations.mobileMenu.panel.transition.damping,
-              stiffness: headerConfig.animations.mobileMenu.panel.transition.stiffness,
-              opacity: { duration: 0.15 }
+            animate={{ 
+              x: 0, 
+              opacity: 1,
+              transition: {
+                x: { type: 'tween', ease: [0.4, 0, 0.2, 1], duration: 0.3 },
+                opacity: { duration: 0.2 }
+              }
             }}
+            exit={{ 
+              x: '100%', 
+              opacity: 0,
+              transition: {
+                x: { type: 'tween', ease: [0.4, 0, 0.2, 1], duration: 0.25 },
+                opacity: { duration: 0.15 }
+              }
+            }}
+            key="mobile-menu"
           >
-            <style>{`
+            <style jsx global>{`
+              /* Optimized mobile styles */
               @media (max-width: 640px) {
-                html, body {
-                  touch-action: pan-y;
-                  -webkit-text-size-adjust: 100%;
-                  -webkit-font-smoothing: antialiased;
-                  -webkit-tap-highlight-color: transparent;
-                  -webkit-touch-callout: none;
-                  overscroll-behavior-y: contain;
+                html.menu-open, 
+                html.menu-open body {
                   position: fixed;
                   width: 100%;
-                  overflow-x: hidden;
+                  height: 100%;
+                  overflow: hidden;
+                  touch-action: none;
+                  -webkit-overflow-scrolling: touch;
                 }
                 
-                /* Prevent content from being zoomed */
-                input, select, textarea, button, a {
-                  font-size: 16px !important;
-                }
-                
-                /* Disable double-tap zoom */
+                /* Optimize rendering performance */
                 * {
-                  touch-action: pan-y;
                   -webkit-tap-highlight-color: transparent;
+                  -webkit-touch-callout: none;
+                  -webkit-font-smoothing: antialiased;
+                  -moz-osx-font-smoothing: grayscale;
+                  text-rendering: optimizeLegibility;
+                }
+                
+                /* Prevent zoom on focus */
+                input, select, textarea {
+                  font-size: 16px !important;
                 }
               }
             `}</style>
@@ -104,7 +125,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, menuReady, onClose }) =
               </Button>
             </div>
 
-            <MobileMenuContent onClose={onClose} menuReady={menuReady} />
+            {menuReady && (
+              <MobileMenuContent onClose={onClose} menuReady={true} />
+            )}
           </motion.div>
         </>
       )}
